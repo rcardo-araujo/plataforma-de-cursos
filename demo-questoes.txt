@@ -1,0 +1,2 @@
+Discursiva;Qual a capital da França?;Paris
+Múltipla;Qual o maior país da América do Sul?;Peru;Bolívia;
