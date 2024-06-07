@@ -9,7 +9,6 @@ public class Modulo {
 
     public boolean fazerLicao(){
         
-
         return true;
     }
 }

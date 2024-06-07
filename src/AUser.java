@@ -5,4 +5,14 @@ public abstract class AUser {
         this.username = username;
         this.pswd = pswd;
     }
+
+    public String getUsername(){
+        return this.username;
+    }
+
+    public String getPassword(){
+        return this.pswd;
+    }
+    
+    //public abstract void inscrever(String s);
 }
