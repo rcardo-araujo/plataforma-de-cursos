@@ -9,5 +9,15 @@ public class Main {
         if(mod.modCompleto()) {
             System.out.printf("Módulo completo 100%s", "%");
         } else System.out.printf("Módulo NÃO está completo!");
+        
+        IAdmin user;
+        Sistema s = Sistema.getInstance();
+        s.regAdminUser("igor", "igor12345");
+        user = s.fazerLoginAdmin("igor", "igor12345");
+        user.adicionarCurso("facebook");
+        user.adicionarCurso("instagram");
+        s.exibirCursos();
+        user.removerCurso("facebook");
+        s.exibirCursos();
     }
 }
