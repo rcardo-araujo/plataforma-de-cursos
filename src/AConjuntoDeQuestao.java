@@ -1,3 +1,4 @@
+
 public abstract class AConjuntoDeQuestao {
     private String nomeArquivo;
     private int numQuestao;
@@ -19,6 +20,7 @@ public abstract class AConjuntoDeQuestao {
         return nomeArquivo;
     }
 
+    
     public abstract void adicionaQuestao(AQuestao nQuestao);
     public abstract void imprimeConjunto();
 }
