@@ -1,17 +1,10 @@
-import java.util.Collection;
-import java.util.ArrayList;
-
+import java.util.Map;
+import java.util.HashMap;
 
 public class Curso {
-    private String nome;
-    private Collection<Modulo> modulos;
-    
-    public Curso(String nome){
-        this.nome = nome;
-        this.modulos = new ArrayList<>();
+    public Curso(String oi) {
+
     }
 
-    public String getNome(){
-        return this.nome;
-    }
+    public String getNome() {return null;};
 }

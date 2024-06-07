@@ -6,8 +6,8 @@ public class QuestaoMultEscolha extends AQuestao {
     private int indexResposta;
     private int numOpcoes;
 
-    public QuestaoMultEscolha(int pontos, String enunciado, int indexResposta) {
-        super(pontos, enunciado);
+    public QuestaoMultEscolha(int pontos, String tipo, String enunciado, int indexResposta) {
+        super(pontos, tipo, enunciado);
         this.indexResposta = indexResposta;
         this.opcoes = new ArrayList<>();
         this.numOpcoes = 0;
@@ -37,7 +37,7 @@ public class QuestaoMultEscolha extends AQuestao {
     }
     
     @Override
-    public void imprimeQuestao() {
+    public void imprimeQuest() {
         this.imprimeHeader();
         for(int i = 0; i < this.opcoes.size(); i++) {
             System.out.printf("[%d] %s%n", i + 1, this.opcoes.get(i));
