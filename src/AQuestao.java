@@ -1,14 +1,16 @@
 public abstract class AQuestao {
     private int pontos;
+    private int qtdErros;
+    private String tipo;
     private String enunciado;
-    private int status; // 0 : Não respondida
-                        // -1 : Resposta errada
-                        // 1 : Resposta certa
+    private boolean correta;
 
-    public AQuestao(int pontos, String enunciado) {
+    public AQuestao(int pontos, String tipo, String enunciado) {
         this.pontos = pontos;
+        this.tipo = tipo;
         this.enunciado = enunciado;
-        this.status = 0;   
+        this.qtdErros = 0;
+        this.correta = false;   
     }
 
     public int getPontos() {
@@ -19,24 +21,36 @@ public abstract class AQuestao {
         this.pontos = pontos;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
     public String getEnunciado() {
         return enunciado;
     }
 
-    public int getStatus() {
-        return status;
+    public boolean getCorreta() {
+        return correta;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCorreta(boolean status) {
+        this.correta = status;
+    }
+
+    public int getQtdErros() {
+        return qtdErros;
+    }
+
+    public void setQtdErros(int qtdErros) {
+        this.qtdErros = qtdErros;
     }
 
     public void alteraPontos(int nPontos) {
         this.setPontos(nPontos);
     }
 
-    public boolean isRespondida() {
-        return this.getStatus() != 0;
+    public boolean estaCorreta() {
+        return this.getCorreta();
     }
 
     public void imprimeHeader() {
@@ -44,5 +58,5 @@ public abstract class AQuestao {
     }
 
     public abstract boolean checaResposta(Object respostaUser);
-    public abstract void imprimeQuestao();
+    public abstract void imprimeQuest();
 }

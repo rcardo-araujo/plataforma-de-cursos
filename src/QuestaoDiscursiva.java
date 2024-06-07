@@ -1,8 +1,8 @@
 public class QuestaoDiscursiva extends AQuestao {
     private String resposta;
 
-    public QuestaoDiscursiva(int pontos, String enunciado, String resposta) {
-        super(pontos, enunciado);
+    public QuestaoDiscursiva(int pontos, String tipo, String enunciado, String resposta) {
+        super(pontos, tipo, enunciado);
         this.resposta = resposta;
     }
 
@@ -22,7 +22,7 @@ public class QuestaoDiscursiva extends AQuestao {
     }
 
     @Override
-    public void imprimeQuestao() {
+    public void imprimeQuest() {
         this.imprimeHeader();
         System.out.println();
     }
