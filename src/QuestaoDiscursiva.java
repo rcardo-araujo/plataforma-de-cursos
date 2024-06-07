@@ -16,11 +16,14 @@ public class QuestaoDiscursiva extends AQuestao {
 
     @Override
     public boolean checaResposta(Object respostaUser) {
-        return this.resposta.equals(respostaUser);
+        if((respostaUser != null) && (respostaUser instanceof String))
+            return respostaUser.equals(this.getResposta());
+        return false;
     }
 
     @Override
     public void imprimeQuestao() {
-        System.out.printf("(%d pontos) %s%n", this.getPontos(), this.getEnunciado());
+        this.imprimeHeader();
+        System.out.println();
     }
 }

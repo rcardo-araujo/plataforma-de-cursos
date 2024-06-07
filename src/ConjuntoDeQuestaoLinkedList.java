@@ -7,6 +7,7 @@ public class ConjuntoDeQuestaoLinkedList extends AConjuntoDeQuestao {
     public ConjuntoDeQuestaoLinkedList(String nomeArquivo) {
         super(nomeArquivo);
         this.conjunto = new LinkedList<>();
+        this.carregaConjuntoDeArquivo();
     }
 
     @Override

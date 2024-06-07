@@ -35,6 +35,14 @@ public abstract class AQuestao {
         this.setPontos(nPontos);
     }
 
+    public boolean isRespondida() {
+        return this.getStatus() != 0;
+    }
+
+    public void imprimeHeader() {
+        System.out.printf("(%d pontos) %s%n", this.pontos, this.enunciado);
+    }
+
     public abstract boolean checaResposta(Object respostaUser);
     public abstract void imprimeQuestao();
 }

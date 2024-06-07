@@ -1,5 +1,6 @@
 public class Main {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        AConjuntoDeQuestao conjTeste = new ConjuntoDeQuestaoLinkedList("D:/uff/materias/poo/anselmo/trabalho/demo-questoes.txt");
+        conjTeste.imprimeConjunto();
     }
 }
