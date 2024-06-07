@@ -34,14 +34,14 @@ public class Sistema {
     }
 
     private class CommonUser extends AUser implements IUser {
-        Collection<GerenciaCurso> cursos;
-        public CommonUser(String pswd, String username){
+        Collection<GerenciaCurso> meusCursos;
+        private CommonUser(String pswd, String username){
             super(pswd, username);
         }
     
         @Override
         public void inscreverCurso(String curso){
-            for(GerenciaCurso c: cursos){
+            for(GerenciaCurso c: meusCursos){
                 if(c.getNome() == curso){
                     System.out.println("Você já está inscrito!");
                     return;
