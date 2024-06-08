@@ -49,10 +49,6 @@ public abstract class AQuestao {
         this.setPontos(nPontos);
     }
 
-    public boolean estaCorreta() {
-        return this.getCorreta();
-    }
-
     public void imprimeHeader() {
         System.out.printf("(%d pontos) %s%n", this.pontos, this.enunciado);
     }

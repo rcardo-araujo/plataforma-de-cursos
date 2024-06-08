@@ -1,3 +1,0 @@
-MUL;Qual a capital da Franca?;40;2;Londres;Paris;Brasilia;Praga
-DIS;O Brasil tem quantos estados?;100;26 estados
-MUL;Qual a extensao territorial do Brasil?;200;4;2.004.300 km²;50.347.467 km²;23.789.098 km²;8.547.403 km²;39.098.789 km²

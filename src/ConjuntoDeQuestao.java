@@ -1,6 +1,8 @@
-import java.util.Map;
-import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.util.Map;
 import java.util.LinkedHashMap;
 
 public class ConjuntoDeQuestao {
@@ -11,12 +13,12 @@ public class ConjuntoDeQuestao {
     private static final int IND_OPC = 4;
 
     private Map<Integer, AQuestao> conj;
-    private String nomeArquivo;
+    private String path;
     private int numQuest;
 
-    public ConjuntoDeQuestao(String nomeArquivo) {
+    public ConjuntoDeQuestao(String path) {
         this.conj = new LinkedHashMap<>();
-        this.nomeArquivo = nomeArquivo;
+        this.path = path;
         this.numQuest = 0;
         this.loadQuest();
     }
@@ -25,8 +27,8 @@ public class ConjuntoDeQuestao {
         return conj;
     }
 
-    public String getNomeArquivo() {
-        return nomeArquivo;
+    public String getPath() {
+        return path;
     }
 
     public int getNumQuest() {
@@ -38,10 +40,11 @@ public class ConjuntoDeQuestao {
     }
 
     private void loadQuest() {
-        if(this.nomeArquivo != null) {
+        if(this.path != null) {
             try {
-                FileReader f = new FileReader("D:/uff/materias/poo/anselmo/trabalho/" + this.nomeArquivo);
-                BufferedReader b = new BufferedReader(f);
+                FileInputStream fs = new FileInputStream(path);
+                InputStreamReader is = new InputStreamReader(fs, StandardCharsets.UTF_8);
+                BufferedReader b = new BufferedReader(is);
 
                 String line = b.readLine();
                 while(line != null) {

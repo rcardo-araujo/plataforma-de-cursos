@@ -1,14 +1,10 @@
 import java.util.Map;
 
 public abstract class AModulo {
-    protected static final String COLOR_RESET = "\u001B[0m";
-    protected static final String COLOR_VERDE = "\u001B[32m";
-    protected static final String COLOR_VERM = "\u001B[31m";
-
     private ConjuntoDeQuestao questoes;
 
-    public AModulo(String nomeArquivo) {
-        this.questoes = new ConjuntoDeQuestao(nomeArquivo);
+    public AModulo(String path) {
+        this.questoes = new ConjuntoDeQuestao(path);
     }
 
     public ConjuntoDeQuestao getQuestoes() {

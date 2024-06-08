@@ -1,0 +1,5 @@
+MUL;Qual país sediou a Copa do Mundo de 2014?;40;1;Brasil;Alemanha;Argentina;Espanha;França
+MUL;Qual jogador é conhecido como "O Rei do Futebol"?;80;3;Maradona;Messi;Pelé;Neymar;Cristiano Ronaldo
+DIS;Qual é o nome do prêmio concedido ao melhor jogador do mundo pela FIFA?;130;Bola de Ouro
+MUL;Quantos jogadores compõem uma equipe de futebol em campo?;20;5;10;9;12;8;11
+DIS;Qual país é o maior campeão da Copa do Mundo masculina?;100;Brasil

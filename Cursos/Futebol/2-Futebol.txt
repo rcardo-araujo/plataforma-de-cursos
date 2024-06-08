@@ -1,0 +1,5 @@
+DIS;Qual clube detém o recorde de mais títulos da Liga dos Campeões da UEFA?;20;Real Madrid
+MUL;Qual clube é o maior campeão do Brasileirão?;80;1;Palmeiras;Flamengo;Santos;Corinthians;Cruzeiro;
+DIS;Qual é o único clube a ter conquistado o Campeonato Brasileiro de forma invicta?;130;Internacional
+MUL;Quem é o artilheiro histórico do Campeonato Brasileiro?;160;2;Romário;Roberto Dinamite;Zico;Edmundo;Pelé;Fred
+DIS;Quem é o maior ídolo da história do Botafogo?;180;Garrincha

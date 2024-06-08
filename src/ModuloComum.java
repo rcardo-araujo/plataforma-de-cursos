@@ -2,10 +2,12 @@ import java.util.Scanner;
 
 public class ModuloComum extends AModulo {
     private String nomeModulo;
+    private int pontos;
 
-    public ModuloComum(int nivel, String nomeCurso){
-        super(String.format("%d-%s.txt", nivel, nomeCurso));
-        this.nomeModulo = String.format("%d-%s", nivel, nomeCurso);
+    public ModuloComum(String nomeCurso, String nomeModulo){
+        super(String.format("./Cursos/%s/%s.txt", nomeCurso, nomeModulo));
+        this.nomeModulo = nomeModulo;
+        this.pontos = 0;
     }
 
     public String getNomeModulo() {
@@ -14,7 +16,7 @@ public class ModuloComum extends AModulo {
 
     public boolean modCompleto() {
         for(AQuestao quest : this.getQuestoes().getConj().values())
-            if(!quest.estaCorreta()) return false;
+            if(!quest.getCorreta()) return false;
         return true;
     }
 
@@ -47,12 +49,15 @@ public class ModuloComum extends AModulo {
             
             boolean check = quest.checaResposta(resp);
             if(!check) {
-                System.out.printf("%sResposta ERRADA!%s%n%n", COLOR_VERM, COLOR_RESET);
+                System.out.printf("%sResposta ERRADA!%s%n%n", TextColor.COLOR_VERM, TextColor.COLOR_RESET);
                 quest.setQtdErros(quest.getQtdErros() + 1);
             }
             else {
-                System.out.printf("%sResposta CORRETA!%s%n%n", COLOR_VERDE, COLOR_RESET);
-                quest.setCorreta(check);
+                System.out.printf("%sResposta CORRETA!%s%n%n", TextColor.COLOR_VERDE, TextColor.COLOR_RESET);
+                if(!quest.getCorreta()) {
+                    quest.setCorreta(true);
+                    this.pontos += quest.getPontos();
+                }
             }
 
             return check;

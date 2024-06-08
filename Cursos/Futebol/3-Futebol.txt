@@ -1,0 +1,5 @@
+MUL;Quantos títulos mundiais a seleção brasileira de futebol feminino conquistou até 2022?;50;1;0;1;2;4;5
+MUL;Qual foi o placar do jogo entre Brasil e Itália na final da Copa do Mundo de 1970?;200;5;3-2;2-0;1-0;3-1;4-1
+MUL;Qual jogador foi o artilheiro da Copa do Mundo de 1982?;240;3;Zico;Michel Platini;Paolo Rossi;Karl-Heinz Rummenigge;Diego Maradona
+DIS;Em que ano a Copa do Mundo de futebol masculino foi disputada pela primeira vez?;100;1930
+MUL;Quem foi o técnico da seleção francesa que venceu a Copa do Mundo de 1998?;300;1;Aimé Jacquet;Didier Deschamps;Raymond Domenech;Laurent Blanc;Lupin
