@@ -91,6 +91,18 @@ public class Sistema {
         this.admins = new ArrayList<>();
         this.cursos = new ArrayList<>();
         this.logName = "log.bin";
+        try{
+            File dir = new File("./Cursos/");
+            File[] lista = dir.listFiles();
+            if(lista != null){
+                for (File f: lista){
+                    cursos.add(new Curso(f.getName()));
+                }
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     public static Sistema getInstance(){
