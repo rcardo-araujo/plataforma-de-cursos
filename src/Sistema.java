@@ -78,6 +78,13 @@ public class Sistema {
             }
             logAtividade(this.getUsername(), "saiu de um curso");
         }
+
+        @Override
+        public void mostrarMeusCursos(){
+            for(GerenciaCurso c: meusCursos){
+                System.out.println(c.getNomeCurso());
+            }
+        }
     }
 
     private static Sistema instancia = null;
@@ -131,7 +138,8 @@ public class Sistema {
     }
 
     public void regAdminUser(String username, String password){
-        this.admins.add(new AdminUser(password, username));
+        AdminUser adm = new AdminUser(password, username);
+        this.admins.add(adm);
     }
 
     public void exibirCursos(){

@@ -1,7 +1,14 @@
 public class Main {
     public static void main(String[] args) throws Exception { 
-        GerenciaCurso g = new GerenciaCurso(new Curso("Futebol"));
-        g.fazerModulo(1);
+        /*GerenciaCurso g = new GerenciaCurso(new Curso("Futebol"));
+        g.imprimeInterfaceCurso();
+        g.fazerModulo(2); */
+        Sistema s = Sistema.getInstance();
+        s.exibirCursos();
+        s.regAdminUser("igor", "igorrodrigues");
+        IUser u = s.fazerLogin("igor", "igorrodrigues");
+        u.inscreverCurso("Futebol");
+        u.mostrarMeusCursos();
         
         // IAdmin user;
         // Sistema s = Sistema.getInstance();
