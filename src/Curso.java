@@ -4,19 +4,19 @@ import java.util.LinkedHashMap;
 
 public class Curso {
     private String nome;
-    private Map<Integer, ModuloComum> mods;
-    private ModuloEspecial modRevisao;
+    private Map<Integer, ModuloComum> modulos;
+    private ModuloEspecial moduloRevisao;
 
     public Curso(String nome) {
         this.nome = nome;
-        this.mods = new LinkedHashMap<>();
-        this.modRevisao = new ModuloEspecial();
+        this.modulos = new LinkedHashMap<>();
+        this.moduloRevisao = new ModuloEspecial();
 
         File f = new File(String.format("./Cursos/%s", nome));
         String[] nomesModulos = f.list();
         for(int i = 0; i < nomesModulos.length; i ++) {
             ModuloComum nModulo = new ModuloComum(this.nome, nomesModulos[i].substring(0, nomesModulos[i].indexOf(".")));
-            this.mods.put(i + 1, nModulo);
+            this.modulos.put(i + 1, nModulo);
         }
     }
 
@@ -24,21 +24,29 @@ public class Curso {
         return this.nome;
     }
 
-    public Map<Integer, ModuloComum> getMods() {
-        return mods;
+    public Map<Integer, ModuloComum> getModulos() {
+        return this.modulos;
     }
 
-    public ModuloEspecial getModRevisao() {
-        return modRevisao;
+    public ModuloEspecial getModuloRevisao() {
+        return moduloRevisao;
     }
 
-    public ModuloComum buscaMod(int id) {
-        return this.mods.get(id);
+    public ModuloComum buscarModulo(int id) {
+        return this.modulos.get(id);
+    }
+
+    public int getMenorQtdErrosModuloRevisao() {
+        return this.moduloRevisao.getMenorQtdErros();
+    }
+
+    public void adicionarQuestaoModuloRevisao(AQuestao nQuestao) {
+        this.moduloRevisao.adicionarQuestao(nQuestao);
     }
 
     public void imprimeCurso() {
         System.out.printf("%s%s%s%n", TextColor.BOLD_BRAN, this.nome, TextColor.COLOR_RESET);
-        for(Map.Entry<Integer, ModuloComum> par : this.mods.entrySet())
+        for(Map.Entry<Integer, ModuloComum> par : this.modulos.entrySet())
             System.out.printf("[%d] %s%n", par.getKey(), par.getValue().getNomeModulo());
         System.out.println();
     }

@@ -50,7 +50,7 @@ public class Sistema {
         public void inscreverCurso(String curso){
             if(!this.existe()) return;
             for(GerenciaCurso c: meusCursos){
-                if(c.getNome() == curso){
+                if(c.getNomeCurso() == curso){
                     System.out.println("Você já está inscrito!");
                     return;
                 }
@@ -68,7 +68,7 @@ public class Sistema {
         public void sairCurso(String curso){
             if(!this.existe()) return;
             for(GerenciaCurso c: meusCursos){
-                if(c.getNome() == curso) meusCursos.remove(c);
+                if(c.getNomeCurso() == curso) meusCursos.remove(c);
                 System.out.println("Você saiu do curso " + curso + " com sucesso!");
                 break;
             }

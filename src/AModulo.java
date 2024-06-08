@@ -1,5 +1,3 @@
-import java.util.Map;
-
 public abstract class AModulo {
     private ConjuntoDeQuestao questoes;
 
@@ -20,7 +18,22 @@ public abstract class AModulo {
     }
 
     public AQuestao buscarQuestao(int id) {
-        return this.questoes.buscaQuestao(id);
+        return this.questoes.buscarQuestao(id);
+    }
+
+    public boolean fazerTarefa(int id) {
+        AQuestao questao = buscarQuestao(id);
+        
+        if(questao != null) {    
+            imprimeQuestao(id);
+            Object resp = solicitarResposta(questao.getTipo());
+            
+            return questao.checaResposta(resp);
+        }
+        else {
+            System.out.printf("%sNão foi possível localizar a questão com este id!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+            return false;
+        }
     }
 
     public Object solicitarResposta(String tipo) {
@@ -43,23 +56,8 @@ public abstract class AModulo {
                 System.exit(1);
             }
         }
-        
-        return null;
-    }
 
-    public boolean fazerTarefa(int id) {
-        AQuestao questao = buscarQuestao(id);
-        
-        if(questao != null) {    
-            imprimeQuestao(id);
-            Object resp = solicitarResposta(questao.getTipo());
-            
-            return questao.checaResposta(resp);
-        }
-        else {
-            System.out.printf("%sNão foi possível localizar a questão com este id!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
-            return false;
-        }
+        return null;
     }
 
     public void imprimeQuestao(int id) {

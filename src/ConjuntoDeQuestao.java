@@ -85,7 +85,7 @@ public class ConjuntoDeQuestao {
         this.conjunto.put(id, nQuestao);
     }
 
-    public AQuestao buscaQuestao(int id) {
+    public AQuestao buscarQuestao(int id) {
         return this.conjunto.get(id);
     }
 

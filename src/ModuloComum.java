@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class ModuloComum extends AModulo {
     private String nomeModulo;
 
@@ -13,9 +11,24 @@ public class ModuloComum extends AModulo {
     }
 
     public boolean moduloCompleto() {
-        for(AQuestao quest : this.getQuestoes().getConjunto().values())
-            if(!quest.getCerta()) return false;
+        for(AQuestao questao : this.getQuestoes().getConjunto().values())
+            if(!questao.getCerta()) return false;
         return true;
+    }
+
+    public int getPontosQuestao(int id) {
+        AQuestao questao = buscarQuestao(id);
+        if(questao.getCerta()) return 0;
+        return questao.getPontos(); 
+    }
+
+    public int getQtdErrosQuestao(int id) {
+        return buscarQuestao(id).getQtdErros();
+    }
+
+    public void adicionarErro(int id) {
+        AQuestao questao = buscarQuestao(id);
+        if(!questao.getCerta()) questao.setQtdErros(questao.getQtdErros() + 1); 
     }
 
     @Override

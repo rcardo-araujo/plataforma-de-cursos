@@ -12,7 +12,7 @@ public class ModuloEspecial extends AModulo {
         return this.getQuestoes().getNumQuestoes() == MAX_QUEST;
     }
 
-    public int menorQtdErros() {
+    public int getMenorQtdErros() {
         int id = 0;
         int min = Integer.MAX_VALUE;
         for(Map.Entry<Integer, AQuestao> par : getQuestoes().getConjunto().entrySet()) {
@@ -27,7 +27,7 @@ public class ModuloEspecial extends AModulo {
     @Override
     public void adicionarQuestao(AQuestao nQuestao) {
         if(this.cheio()) {
-            int idSub = this.menorQtdErros();
+            int idSub = this.getMenorQtdErros();
             this.getQuestoes().adicionaQuestao(idSub, nQuestao);
         } else {
             this.getQuestoes().adicionaQuestao(nQuestao);
@@ -36,7 +36,7 @@ public class ModuloEspecial extends AModulo {
 
     @Override
     public void imprimeModulo() {
-        System.out.printf("### Módulo de Revisão ###%n%n");
+        System.out.printf("%sMódulo de Revisão%s%n%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
         Map<Integer, AQuestao> conj = this.getQuestoes().getConjunto();
         for(Map.Entry<Integer, AQuestao> par : conj.entrySet()) {
             System.out.printf("[%d] %s%n", par.getKey(), par.getValue().getEnunciado());

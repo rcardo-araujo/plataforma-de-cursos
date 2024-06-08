@@ -16,6 +16,10 @@ public class GerenciaCurso {
         return curso;
     }
 
+    public String getNomeCurso() {
+        return this.curso.getNome();
+    }
+
     public int getNivel() {
         return nivel;
     }
@@ -32,30 +36,54 @@ public class GerenciaCurso {
         this.pontos = pontos;
     }
 
-    public void fazerMod(int id) {
-        ModuloComum mod = this.curso.buscaMod(id);
-        if(mod == null) {
-            System.out.printf("%sMódulo com este id inexistente!%s%n%n",
-                TextColor.BOLD_BRAN,
-                TextColor.COLOR_RESET);
-            
+    public void fazerModulo(int id) {
+        if(id == 0) {
+            fazerModuloRevisao();
             return;
         }
+        
+        ModuloComum modulo = this.curso.buscarModulo(id);
+        if(modulo != null) {
+            modulo.imprimeModulo();
+            int opcao = solicitarId();
+            if(modulo.fazerTarefa(opcao)) {
+                this.pontos += modulo.getPontosQuestao(id);
+                TextColor.respostaCerta();
+            }
+            else {
+                modulo.adicionarErro(id);
+                if(modulo.getQtdErrosQuestao(id) > this.curso.getMenorQtdErrosModuloRevisao()) {
+                    this.curso.adicionarQuestaoModuloRevisao(modulo.buscarQuestao(id));
+                }
+                TextColor.respostaErrada();
+            }
+        }
+        else {
+            System.out.printf("%sNão foi possível localizar módulo com esse id!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+        }
+    }
+
+    public void fazerModuloRevisao() {
+        this.curso.getModuloRevisao().imprimeModulo();
+        int opcao = solicitarId();
+        this.curso.getModuloRevisao().fazerTarefa(opcao);
+    }
+
+    public int solicitarId() {
+        Leitor leitor = Leitor.getInstance();
+        System.out.printf("Digite o id da questao: ");
+        int resp;
 
         try {
-            Scanner s = new Scanner(System.in);
-            
-            mod.imprimeModulo();
-            System.out.print("Qual questão gostaria de fazer?: ");
-            int opc = s.nextInt();
+            resp = leitor.nextInt();
             System.out.println();
-
-            
-            mod.fazerTarefa(opc);
-        } catch(Exception e) {
+            return resp;
+        } catch(ExcecaoLeitorFechado e) {
             e.printStackTrace();
             System.exit(1);
         }
+
+        return 0;
     }
 
     public void imprimeInterfaceCurso() {
@@ -64,7 +92,7 @@ public class GerenciaCurso {
             this.curso.getNome(), 
             TextColor.COLOR_RESET);
         
-        for(Map.Entry<Integer, ModuloComum> par : this.curso.getMods().entrySet()) {
+        for(Map.Entry<Integer, ModuloComum> par : this.curso.getModulos().entrySet()) {
             System.out.printf("[%d] ", par.getKey());
             if(par.getKey() == this.nivel) System.out.print(TextColor.COLOR_CIANO);
             else if(par.getKey() < this.nivel) System.out.print(TextColor.COLOR_VERDE);

@@ -1,9 +1,7 @@
-import java.io.FileWriter;
-import java.io.File;
-
 public class Main {
     public static void main(String[] args) throws Exception { 
         GerenciaCurso g = new GerenciaCurso(new Curso("Futebol"));
+        g.fazerModulo(1);
         
         // IAdmin user;
         // Sistema s = Sistema.getInstance();
