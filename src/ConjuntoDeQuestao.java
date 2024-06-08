@@ -12,37 +12,31 @@ public class ConjuntoDeQuestao {
     private static final int IND_RESP = 3;
     private static final int IND_OPC = 4;
 
-    private Map<Integer, AQuestao> conj;
-    private String path;
-    private int numQuest;
+    private Map<Integer, AQuestao> conjunto;
+    private int numQuestoes;
 
     public ConjuntoDeQuestao(String path) {
-        this.conj = new LinkedHashMap<>();
-        this.path = path;
-        this.numQuest = 0;
-        this.loadQuest();
+        this.conjunto = new LinkedHashMap<>();
+        this.numQuestoes = 0;
+        this.loadQuestoes(path);
     }
 
-    public Map<Integer, AQuestao> getConj() {
-        return conj;
+    public Map<Integer, AQuestao> getConjunto() {
+        return conjunto;
     }
 
-    public String getPath() {
-        return path;
+    public int getNumQuestoes() {
+        return numQuestoes;
     }
 
-    public int getNumQuest() {
-        return numQuest;
+    public void setNumQuestoes(int numQuestoes) {
+        this.numQuestoes = numQuestoes;
     }
 
-    public void setNumQuest(int numQuest) {
-        this.numQuest = numQuest;
-    }
-
-    private void loadQuest() {
-        if(this.path != null) {
+    private void loadQuestoes(String path) {
+        if(path != null) {
             try {
-                FileInputStream fs = new FileInputStream(path);
+                FileInputStream fs = new FileInputStream(path + ".txt");
                 InputStreamReader is = new InputStreamReader(fs, StandardCharsets.UTF_8);
                 BufferedReader b = new BufferedReader(is);
 
@@ -60,7 +54,7 @@ public class ConjuntoDeQuestao {
                         for(int i = IND_OPC; i < atributos.length; i ++)
                             quest.adicionaOpcao(atributos[i]);
                         
-                        adicionaQuest(quest);
+                        adicionaQuestao(quest);
                     }
                     else if(atributos[IND_TIPO].equals("DIS")) {
                         QuestaoDiscursiva quest = new QuestaoDiscursiva(
@@ -69,7 +63,7 @@ public class ConjuntoDeQuestao {
                             atributos[IND_ENUN],
                             atributos[IND_RESP]);
                         
-                        adicionaQuest(quest);
+                        adicionaQuestao(quest);
                     }
 
                     line = b.readLine();
@@ -81,33 +75,33 @@ public class ConjuntoDeQuestao {
         }
     }
 
-    public void adicionaQuest(AQuestao nQuestao) {
-        this.setNumQuest(this.getNumQuest() + 1);
-        this.conj.put(this.getNumQuest(), nQuestao);
+    public void adicionaQuestao(AQuestao nQuestao) {
+        this.setNumQuestoes(this.getNumQuestoes() + 1);
+        this.conjunto.put(this.getNumQuestoes(), nQuestao);
     }
 
-    public void adicionaQuest(int id, AQuestao nQuestao) {
-        this.setNumQuest(this.getNumQuest() + 1);
-        this.conj.put(id, nQuestao);
+    public void adicionaQuestao(int id, AQuestao nQuestao) {
+        this.setNumQuestoes(this.getNumQuestoes() + 1);
+        this.conjunto.put(id, nQuestao);
     }
 
-    public AQuestao buscaQuest(int id) {
-        return this.conj.get(id);
+    public AQuestao buscaQuestao(int id) {
+        return this.conjunto.get(id);
     }
 
     public boolean vazio() {
-        return this.getNumQuest() == 0;
+        return this.getNumQuestoes() == 0;
     }
 
     public void imprimeHeaders() {
-        for(Map.Entry<Integer, AQuestao> par : this.conj.entrySet()) { 
+        for(Map.Entry<Integer, AQuestao> par : this.conjunto.entrySet()) { 
             System.out.printf("[%d] ", par.getKey());
             par.getValue().imprimeHeader();
         }
     }
 
-    public void imprime() {
-        for(AQuestao quest : this.conj.values()) 
-            quest.imprimeQuest();
+    public void imprimeConjunto() {
+        for(AQuestao quest : this.conjunto.values()) 
+            quest.imprimeQuestao();
     }
 }

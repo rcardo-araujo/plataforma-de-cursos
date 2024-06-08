@@ -22,7 +22,7 @@ public class QuestaoDiscursiva extends AQuestao {
     }
 
     @Override
-    public void imprimeQuest() {
+    public void imprimeQuestao() {
         this.imprimeHeader();
         System.out.println();
     }

@@ -11,27 +11,65 @@ public abstract class AModulo {
         return questoes;
     }
 
-    public int numQuest() {
-        return questoes.getNumQuest();
+    public int getNumQuestoes() {
+        return questoes.getNumQuestoes();
     }
 
-    public void adicionaQuest(int id, AQuestao nQuestao) {
-        this.questoes.adicionaQuest(nQuestao);
+    public void adicionarQuestao(int id, AQuestao nQuestao) {
+        this.questoes.adicionaQuestao(nQuestao);
     }
 
-    public int minErro() {
-        int id = 0;
-        int min = Integer.MAX_VALUE;
-        for(Map.Entry<Integer, AQuestao> par : questoes.getConj().entrySet()) {
-            if(par.getValue().getQtdErros() < min) {
-                min = par.getValue().getQtdErros();
-                id = par.getKey();
+    public AQuestao buscarQuestao(int id) {
+        return this.questoes.buscaQuestao(id);
+    }
+
+    public Object solicitarResposta(String tipo) {
+        Leitor leitor = Leitor.getInstance();
+        System.out.print("Digite sua resposta: ");
+
+        if(tipo.equals("MUL")) {
+            try {
+                return leitor.nextInt();
+            } catch(ExcecaoLeitorFechado e) {
+                e.printStackTrace();
+                System.exit(1);
             }
         }
-        return id;
+        if(tipo.equals("DIS")) {
+            try {
+                return leitor.nextLine();
+            } catch(ExcecaoLeitorFechado e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+        }
+        
+        return null;
     }
 
-    public abstract void adicionaQuest(AQuestao nQuestao);
-    public abstract boolean toDo(int id);
-    public abstract void imprimeMod();
+    public boolean fazerTarefa(int id) {
+        AQuestao questao = buscarQuestao(id);
+        
+        if(questao != null) {    
+            imprimeQuestao(id);
+            Object resp = solicitarResposta(questao.getTipo());
+            
+            return questao.checaResposta(resp);
+        }
+        else {
+            System.out.printf("%sNão foi possível localizar a questão com este id!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+            return false;
+        }
+    }
+
+    public void imprimeQuestao(int id) {
+        AQuestao questao = this.buscarQuestao(id);
+        if(questao != null) {
+            System.out.printf("%sQuestão %d%s%n", TextColor.BOLD_CIANO, id, TextColor.COLOR_RESET);
+            questao.imprimeQuestao();
+        }
+    }
+
+    public abstract void adicionarQuestao(AQuestao nQuestao);
+    public abstract void imprimeModulo();
 }

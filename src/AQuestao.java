@@ -3,14 +3,14 @@ public abstract class AQuestao {
     private int qtdErros;
     private String tipo;
     private String enunciado;
-    private boolean correta;
+    private boolean certa;
 
     public AQuestao(int pontos, String tipo, String enunciado) {
         this.pontos = pontos;
         this.tipo = tipo;
         this.enunciado = enunciado;
         this.qtdErros = 0;
-        this.correta = false;   
+        this.certa = false;   
     }
 
     public int getPontos() {
@@ -29,12 +29,12 @@ public abstract class AQuestao {
         return enunciado;
     }
 
-    public boolean getCorreta() {
-        return correta;
+    public boolean getCerta() {
+        return certa;
     }
 
-    public void setCorreta(boolean status) {
-        this.correta = status;
+    public void setCerta(boolean status) {
+        this.certa = status;
     }
 
     public int getQtdErros() {
@@ -54,5 +54,5 @@ public abstract class AQuestao {
     }
 
     public abstract boolean checaResposta(Object respostaUser);
-    public abstract void imprimeQuest();
+    public abstract void imprimeQuestao();
 }

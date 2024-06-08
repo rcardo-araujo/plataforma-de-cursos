@@ -37,7 +37,7 @@ public class QuestaoMultEscolha extends AQuestao {
     }
     
     @Override
-    public void imprimeQuest() {
+    public void imprimeQuestao() {
         this.imprimeHeader();
         for(int i = 0; i < this.opcoes.size(); i++) {
             System.out.printf("[%d] %s%n", i + 1, this.opcoes.get(i));

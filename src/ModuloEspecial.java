@@ -9,53 +9,37 @@ public class ModuloEspecial extends AModulo {
     }
 
     public boolean cheio() {
-        return this.getQuestoes().getNumQuest() == MAX_QUEST;
+        return this.getQuestoes().getNumQuestoes() == MAX_QUEST;
+    }
+
+    public int menorQtdErros() {
+        int id = 0;
+        int min = Integer.MAX_VALUE;
+        for(Map.Entry<Integer, AQuestao> par : getQuestoes().getConjunto().entrySet()) {
+            if(par.getValue().getQtdErros() < min) {
+                min = par.getValue().getQtdErros();
+                id = par.getKey();
+            }
+        }
+        return id;
     }
 
     @Override
-    public void adicionaQuest(AQuestao nQuestao) {
+    public void adicionarQuestao(AQuestao nQuestao) {
         if(this.cheio()) {
-            int idSub = this.minErro();
-            this.getQuestoes().adicionaQuest(idSub, nQuestao);
+            int idSub = this.menorQtdErros();
+            this.getQuestoes().adicionaQuestao(idSub, nQuestao);
         } else {
-            this.getQuestoes().adicionaQuest(nQuestao);
+            this.getQuestoes().adicionaQuestao(nQuestao);
         }
     }
 
     @Override
-    public void imprimeMod() {
+    public void imprimeModulo() {
         System.out.printf("### Módulo de Revisão ###%n%n");
-        Map<Integer, AQuestao> conj = this.getQuestoes().getConj();
+        Map<Integer, AQuestao> conj = this.getQuestoes().getConjunto();
         for(Map.Entry<Integer, AQuestao> par : conj.entrySet()) {
             System.out.printf("[%d] %s%n", par.getKey(), par.getValue().getEnunciado());
         }
-    }
-
-    @Override
-    public boolean toDo(int id) {
-        try {
-            Scanner s = new Scanner(System.in);
-            AQuestao quest = this.getQuestoes().buscaQuest(id);
-            if(quest == null) return false;
-
-            System.out.printf("# Questão %d #%n", id);
-            quest.imprimeQuest();
-            System.out.print("Digite sua resposta: ");
-            Object resp = null;
-            
-            if(quest.getTipo().equals("MUL")) resp = s.nextInt();
-            else if(quest.getTipo().equals("DIS")) resp = s.nextLine();
-            
-            boolean check = quest.checaResposta(resp);
-            if(check) System.out.printf("Resposta CORRETA!%n%n");
-            else System.out.print("Resposta ERRADA!%n%n");
-
-            return check;
-        } 
-        catch(Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        } 
-        return false;
     }
 }
