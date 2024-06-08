@@ -12,6 +12,10 @@ public class GerenciaCurso {
         this.pontos = 0;
     }
 
+    public String getNome(){
+        return this.curso.getNome();
+    }
+
     public Curso getCurso() {
         return curso;
     }
