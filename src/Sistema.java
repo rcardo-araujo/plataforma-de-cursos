@@ -15,6 +15,7 @@ public class Sistema {
             for(Curso c: cursos){
                 if(c.getNome() == curso) cursos.remove(c);
             }
+            logAtividade(this.getClass().getName(), "removeu um curso");
         }
 
         @Override
@@ -23,6 +24,7 @@ public class Sistema {
                 if(c.getNome() == curso) return;
             }
             cursos.add(new Curso(curso));
+            logAtividade(this.getClass().getName(), "adicionou um curso");
         }
 
         @Override
@@ -30,6 +32,7 @@ public class Sistema {
             for(CommonUser u: users){
                 if(u.getUsername() == username) users.remove(u);
             }
+            logAtividade(this.getClass().getName(), "removeu um usuário");
         }
     }
 
@@ -62,6 +65,7 @@ public class Sistema {
                     break;
                 }
             }
+            logAtividade(this.getUsername(), "se inscreveu em um curso");
         }
     
         @Override
@@ -72,6 +76,7 @@ public class Sistema {
                 System.out.println("Você saiu do curso " + curso + " com sucesso!");
                 break;
             }
+            logAtividade(this.getUsername(), "saiu de um curso");
         }
     }
 
