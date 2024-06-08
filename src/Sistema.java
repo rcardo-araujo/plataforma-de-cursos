@@ -38,20 +38,40 @@ public class Sistema {
         private CommonUser(String pswd, String username){
             super(pswd, username);
         }
+
+        private boolean existe(){
+            for(IUser u: users){
+                if(u == this) return true;
+            }
+            return false;
+        }
     
         @Override
         public void inscreverCurso(String curso){
+            if(!this.existe()) return;
             for(GerenciaCurso c: meusCursos){
                 if(c.getNome() == curso){
                     System.out.println("Você já está inscrito!");
                     return;
                 }
             }
+            for(Curso c: cursos){
+                if(c.getNome() == curso){
+                    System.out.println("Você foi inscrito no curso " + curso);
+                    this.meusCursos.add(new GerenciaCurso(c));
+                    break;
+                }
+            }
         }
     
         @Override
         public void sairCurso(String curso){
-    
+            if(!this.existe()) return;
+            for(GerenciaCurso c: meusCursos){
+                if(c.getNome() == curso) meusCursos.remove(c);
+                System.out.println("Você saiu do curso " + curso + " com sucesso!");
+                break;
+            }
         }
     }
 
@@ -59,11 +79,13 @@ public class Sistema {
     private Collection<CommonUser> users;
     private Collection<AdminUser> admins;
     private Collection<Curso> cursos;
+    private String logName;
 
     private Sistema(){
         this.users = new ArrayList<>();
         this.admins = new ArrayList<>();
         this.cursos = new ArrayList<>();
+        this.logName = "log.bin";
     }
 
     public static Sistema getInstance(){
@@ -98,6 +120,21 @@ public class Sistema {
     public void exibirCursos(){
         for(Curso c: cursos){
             System.out.println(c.getNome());
+        }
+    }
+
+    private void logAtividade(String userClass, String action){
+        try{
+            FileOutputStream log = new FileOutputStream(logName, true);
+            String data = new java.util.Date().toString();
+            log.write(data.getBytes());
+            log.write(userClass.getBytes());
+            log.write(": ".getBytes());
+            log.write(action.getBytes());
+            log.write("\\".getBytes());
+            log.close();
+        } catch(IOException e){
+            e.printStackTrace();
         }
     }
 }
