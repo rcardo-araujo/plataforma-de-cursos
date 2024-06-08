@@ -5,7 +5,7 @@ public class Main {
         g.fazerModulo(2); */
         Sistema s = Sistema.getInstance();
         s.exibirCursos();
-        s.regAdminUser("igor", "igorrodrigues");
+        s.regCommonUser("igor", "igorrodrigues");
         IUser u = s.fazerLogin("igor", "igorrodrigues");
         u.inscreverCurso("Futebol");
         u.mostrarMeusCursos();

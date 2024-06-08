@@ -1,6 +1,6 @@
 import java.io.*;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Sistema {
     public class AdminUser extends AUser implements IAdmin {
@@ -40,6 +40,7 @@ public class Sistema {
         Collection<GerenciaCurso> meusCursos;
         private CommonUser(String pswd, String username){
             super(pswd, username);
+            this.meusCursos = new ArrayList<>();
         }
 
         private boolean existe(){
@@ -53,13 +54,13 @@ public class Sistema {
         public void inscreverCurso(String curso){
             if(!this.existe()) return;
             for(GerenciaCurso c: meusCursos){
-                if(c.getNomeCurso() == curso){
+                if(c.getNomeCurso().equals(curso)){
                     System.out.println("Você já está inscrito!");
                     return;
                 }
             }
             for(Curso c: cursos){
-                if(c.getNome() == curso){
+                if(c.getNome().equals(curso)){
                     System.out.println("Você foi inscrito no curso " + curso);
                     this.meusCursos.add(new GerenciaCurso(c));
                     break;
@@ -72,7 +73,7 @@ public class Sistema {
         public void sairCurso(String curso){
             if(!this.existe()) return;
             for(GerenciaCurso c: meusCursos){
-                if(c.getNomeCurso() == curso) meusCursos.remove(c);
+                if(c.getNomeCurso().equals(curso)) meusCursos.remove(c);
                 System.out.println("Você saiu do curso " + curso + " com sucesso!");
                 break;
             }
@@ -81,7 +82,7 @@ public class Sistema {
 
         @Override
         public void mostrarMeusCursos(){
-            for(GerenciaCurso c: meusCursos){
+            for(GerenciaCurso c: this.meusCursos){
                 System.out.println(c.getNomeCurso());
             }
         }

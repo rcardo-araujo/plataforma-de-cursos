@@ -1,5 +1,4 @@
 import java.util.Map;
-import java.util.Scanner;
 
 public class GerenciaCurso {
     private Curso curso;
@@ -10,10 +9,6 @@ public class GerenciaCurso {
         this.curso = curso;
         this.nivel = 1;
         this.pontos = 0;
-    }
-
-    public String getNome(){
-        return this.curso.getNome();
     }
 
     public Curso getCurso() {
