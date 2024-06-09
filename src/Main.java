@@ -46,7 +46,6 @@ public class Main {
         // [02] Exibir cursos disponíveis
 
 
-
         leitor.close();
     }
 }

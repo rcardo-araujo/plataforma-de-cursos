@@ -1,6 +1,6 @@
 import java.io.*;
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Sistema {
     public class AdminUser extends AUser implements IAdmin {
@@ -40,6 +40,7 @@ public class Sistema {
         Collection<GerenciaCurso> meusCursos;
         private CommonUser(String pswd, String username){
             super(pswd, username);
+            this.meusCursos = new ArrayList<>();
         }
 
         private boolean existe(){
@@ -78,6 +79,13 @@ public class Sistema {
             }
             logAtividade(this.getUsername(), "saiu de um curso");
         }
+
+        @Override
+        public void mostrarMeusCursos(){
+            for(GerenciaCurso c: this.meusCursos){
+                System.out.println(c.getNomeCurso());
+            }
+        }
     }
 
     private static Sistema instancia = null;
@@ -91,6 +99,18 @@ public class Sistema {
         this.admins = new ArrayList<>();
         this.cursos = new ArrayList<>();
         this.logName = "log.bin";
+        try{
+            File dir = new File("./Cursos/");
+            File[] lista = dir.listFiles();
+            if(lista != null){
+                for (File f: lista){
+                    cursos.add(new Curso(f.getName()));
+                }
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     public static Sistema getInstance(){
@@ -119,7 +139,8 @@ public class Sistema {
     }
 
     public void regAdminUser(String username, String password){
-        this.admins.add(new AdminUser(password, username));
+        AdminUser adm = new AdminUser(password, username);
+        this.admins.add(adm);
     }
 
     public void exibirCursos(){
