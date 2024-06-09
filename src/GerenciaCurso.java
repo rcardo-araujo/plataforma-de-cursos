@@ -1,5 +1,4 @@
 import java.util.Map;
-import java.util.Scanner;
 
 public class GerenciaCurso {
     private Curso curso;
@@ -10,10 +9,6 @@ public class GerenciaCurso {
         this.curso = curso;
         this.nivel = 1;
         this.pontos = 0;
-    }
-
-    public String getNome(){
-        return this.curso.getNome();
     }
 
     public Curso getCurso() {
@@ -45,25 +40,50 @@ public class GerenciaCurso {
             fazerModuloRevisao();
             return;
         }
-        
+        if(id > this.nivel) {
+            Mensagens.usuarioNaoAptoModulo();
+            return;
+        }
+
         ModuloComum modulo = this.curso.buscarModulo(id);
         if(modulo != null) {
             modulo.imprimeModulo();
             int opcao = solicitarId();
-            if(modulo.fazerTarefa(opcao)) {
-                this.pontos += modulo.getPontosQuestao(id);
-                TextColor.respostaCerta();
+
+            AQuestao questao = modulo.buscarQuestao(id);
+            if(questao != null) {
+                if(modulo.fazerTarefa(opcao)) {
+                    int pontosQuestao = modulo.getPontosQuestao(id);
+                    if(pontos != 0)  {
+                        questao.setCerta(true);
+                        this.pontos += pontosQuestao;
+                        if(modulo.verificaModuloCompleto()) {
+                            if(this.nivel < this.curso.getModulos().size()) {
+                                this.nivel ++;
+                                Mensagens.moduloDesbloqueado(this.curso.buscarModulo(this.nivel).getNomeModulo());
+                            }
+                            else {
+                                this.nivel = Integer.MAX_VALUE;
+                                Mensagens.cursoCompleto(getNomeCurso());
+                            }
+                        }
+                    }
+                    Mensagens.respostaCerta();
+                }
+                else {
+                    questao.adicionarErro();
+                    if(questao.getQtdErros() > this.curso.getMenorQtdErrosModuloRevisao()) {
+                        this.curso.adicionarQuestaoModuloRevisao(questao);
+                    }
+                    Mensagens.respostaErrada();
+                }
             }
             else {
-                modulo.adicionarErro(id);
-                if(modulo.getQtdErrosQuestao(id) > this.curso.getMenorQtdErrosModuloRevisao()) {
-                    this.curso.adicionarQuestaoModuloRevisao(modulo.buscarQuestao(id));
-                }
-                TextColor.respostaErrada();
+                Mensagens.questaoNaoLocalizada();
             }
         }
         else {
-            System.out.printf("%sNão foi possível localizar módulo com esse id!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+            Mensagens.moduloNaoLocalizado();
         }
     }
 

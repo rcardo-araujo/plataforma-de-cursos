@@ -68,6 +68,7 @@ public class ConjuntoDeQuestao {
 
                     line = b.readLine();
                 }
+                b.close();
             } catch(Exception e) {
                 e.printStackTrace();
                 System.exit(1);

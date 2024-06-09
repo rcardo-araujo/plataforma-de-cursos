@@ -1,0 +1,5 @@
+MUL;Qual é a capital do Brasil?;50;3;Rio de Janeiro;São Paulo;Brasília;Belo Horizonte;Salvador
+DIS;Qual é o país com a maior área territorial do mundo?;120;Rússia
+MUL;Qual é a capital da Argentina?;40;3;Montevidéu;Santiago;Buenos Aires;Assunção;Lima
+DIS;Qual é o país mais populoso do mundo?;100;China
+MUL;Qual é a capital do Canadá?;30;1;Ottawa;Toronto;Montreal;Vancouver;Calgary

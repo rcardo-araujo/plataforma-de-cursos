@@ -31,7 +31,7 @@ public class QuestaoMultEscolha extends AQuestao {
         if((respostaUser != null) && (respostaUser instanceof Integer)) { 
             int intResp = (int) respostaUser;
             if((intResp >= 1 && intResp <= this.opcoes.size()) && intResp == indexResposta)
-                    return true;
+                return true;
         }
         return false;
     }

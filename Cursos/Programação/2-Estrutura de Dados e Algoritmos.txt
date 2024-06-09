@@ -1,0 +1,5 @@
+MUL;Qual estrutura de dados é melhor para buscar elementos de forma eficiente?;70;3;Fila;Lista simplesmente encadeada;Árvore binária de busca;Pilha;Array
+DIS;Qual o método de organização para a manipulação de dados de uma fila?;90;FIFO
+DIS;Qual algoritmo de ordenação mais eficiente?;80;Quick Sort
+DIS;Qual é a estrutura de dados composta por vértices e arestas, onde cada aresta pode ter um peso associado?;80;Grafo
+MUL;Qual é a complexidade de tempo média do algoritmo de busca binária?;60;4;O(n);O(n^2);O(1);O(log n);O(n log n)

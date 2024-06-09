@@ -31,7 +31,7 @@ public abstract class AModulo {
             return questao.checaResposta(resp);
         }
         else {
-            System.out.printf("%sNão foi possível localizar a questão com este id!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+            Mensagens.questaoNaoLocalizada();
             return false;
         }
     }
@@ -39,10 +39,12 @@ public abstract class AModulo {
     public Object solicitarResposta(String tipo) {
         Leitor leitor = Leitor.getInstance();
         System.out.print("Digite sua resposta: ");
+        Object resp = null;
 
         if(tipo.equals("MUL")) {
             try {
-                return leitor.nextInt();
+                resp = leitor.nextInt();
+                leitor.nextLine();
             } catch(ExcecaoLeitorFechado e) {
                 e.printStackTrace();
                 System.exit(1);
@@ -50,14 +52,14 @@ public abstract class AModulo {
         }
         if(tipo.equals("DIS")) {
             try {
-                return leitor.nextLine();
+                resp = leitor.nextLine();
             } catch(ExcecaoLeitorFechado e) {
                 e.printStackTrace();
                 System.exit(1);
             }
         }
 
-        return null;
+        return resp;
     }
 
     public void imprimeQuestao(int id) {

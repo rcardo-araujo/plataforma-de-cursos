@@ -45,8 +45,12 @@ public abstract class AQuestao {
         this.qtdErros = qtdErros;
     }
 
-    public void alteraPontos(int nPontos) {
+    public void alterarPontos(int nPontos) {
         this.setPontos(nPontos);
+    }
+
+    public void adicionarErro() {
+        this.pontos += 1;
     }
 
     public void imprimeHeader() {

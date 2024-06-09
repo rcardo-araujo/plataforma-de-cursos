@@ -1,5 +1,4 @@
 import java.util.Map;
-import java.util.Scanner;
 
 public class ModuloEspecial extends AModulo {
     private static final int MAX_QUEST = 6;

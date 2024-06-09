@@ -1,16 +1,26 @@
 public class ModuloComum extends AModulo {
     private String nomeModulo;
+    private boolean completo;
 
     public ModuloComum(String nomeCurso, String nomeModulo){
         super(String.format("./Cursos/%s/%s", nomeCurso, nomeModulo));
         this.nomeModulo = nomeModulo;
+        this.completo = false;
     }
 
     public String getNomeModulo() {
         return nomeModulo;
     }
 
-    public boolean moduloCompleto() {
+    public void setCompleto(boolean completo) {
+        this.completo = completo;
+    }
+
+    public boolean isCompleto() {
+        return completo;
+    }
+
+    public boolean verificaModuloCompleto() {
         for(AQuestao questao : this.getQuestoes().getConjunto().values())
             if(!questao.getCerta()) return false;
         return true;
@@ -20,15 +30,6 @@ public class ModuloComum extends AModulo {
         AQuestao questao = buscarQuestao(id);
         if(questao.getCerta()) return 0;
         return questao.getPontos(); 
-    }
-
-    public int getQtdErrosQuestao(int id) {
-        return buscarQuestao(id).getQtdErros();
-    }
-
-    public void adicionarErro(int id) {
-        AQuestao questao = buscarQuestao(id);
-        if(!questao.getCerta()) questao.setQtdErros(questao.getQtdErros() + 1); 
     }
 
     @Override

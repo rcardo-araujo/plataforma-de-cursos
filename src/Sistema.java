@@ -53,13 +53,13 @@ public class Sistema {
         public void inscreverCurso(String curso){
             if(!this.existe()) return;
             for(GerenciaCurso c: meusCursos){
-                if(c.getNomeCurso() == curso){
+                if(c.getNomeCurso().equals(curso)){
                     System.out.println("Você já está inscrito!");
                     return;
                 }
             }
             for(Curso c: cursos){
-                if(c.getNome() == curso){
+                if(c.getNome().equals(curso)){
                     System.out.println("Você foi inscrito no curso " + curso);
                     this.meusCursos.add(new GerenciaCurso(c));
                     break;
@@ -72,7 +72,7 @@ public class Sistema {
         public void sairCurso(String curso){
             if(!this.existe()) return;
             for(GerenciaCurso c: meusCursos){
-                if(c.getNomeCurso() == curso) meusCursos.remove(c);
+                if(c.getNomeCurso().equals(curso)) meusCursos.remove(c);
                 System.out.println("Você saiu do curso " + curso + " com sucesso!");
                 break;
             }
@@ -102,14 +102,14 @@ public class Sistema {
 
     public IUser fazerLogin(String username, String password){
         for (CommonUser a: users){
-            if(a.getUsername() == username && a.getPassword() == password) return a;
+            if(a.getUsername().equals(username) && a.getPassword().equals(password)) return a;
         }
         return null;
     }
 
     public IAdmin fazerLoginAdmin(String username, String password){
         for (AdminUser a: admins){
-            if(a.getUsername() == username && a.getPassword() == password) return a;
+            if(a.getUsername().equals(username) && a.getPassword().equals(password)) return a;
         }
         return null;
     }

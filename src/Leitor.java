@@ -1,4 +1,3 @@
-import java.io.Reader;
 import java.util.Scanner;
 
 public class Leitor {
@@ -6,7 +5,7 @@ public class Leitor {
     private boolean fechado;
     private static Leitor singleton = null;
 
-    public Leitor() {
+    private Leitor() {
         this.s = new Scanner(System.in);
         this.fechado = false;
     }
