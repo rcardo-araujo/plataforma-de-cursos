@@ -12,4 +12,13 @@ public class TextColor {
     static final String BOLD_VERDE = "\033[1;32m";
     static final String BOLD_ROXO = "\033[1;35m";
     static final String BOLD_AZUL = "\033[1;34m";
+    static final String BOLD_VERM = "\033[1;31m";
+
+    public static void linhasRoxas() {
+        System.out.printf("%s----------------------%s%n", TextColor.COLOR_ROXO, TextColor.COLOR_RESET);
+    }
+
+    public static void linhasBrancas() {
+        System.out.printf("%s----------------------%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+    }
 }

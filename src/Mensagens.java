@@ -40,11 +40,11 @@ public class Mensagens {
     }
 
     public static void foiInscritoNoCurso(String nomeCurso) {
-        System.out.printf("%sCurso desbloqueado: %sFutebol!%s%n%n", TextColor.COLOR_VERDE, TextColor.BOLD_VERDE, TextColor.COLOR_RESET);
+        System.out.printf("%sCurso desbloqueado: %s%s%s%n%n", TextColor.COLOR_VERDE, TextColor.BOLD_VERDE, nomeCurso, TextColor.COLOR_RESET);
     }
 
-    public static void cursoInexistente() {
-        System.out.printf("%sNão existe um curso com este nome%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+    public static void cursoInexistente(String nomeCurso) {
+        System.out.printf("%sNão existe um curso com este nome: %s%s%s%n%n", TextColor.COLOR_AMAR, TextColor.BOLD_AMAR, nomeCurso, TextColor.COLOR_RESET);
     }
 
     public static void usuarioInexistente() {
@@ -56,18 +56,42 @@ public class Mensagens {
     }
 
     public static void semCadastroEmCursos() {
-        System.out.printf("%sVocê ainda não se cadastrou em NENHUM curso!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+        System.out.printf("%sVocê ainda não se cadastrou em NENHUM curso!%s%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
     }
 
     public static void naoTemCurso() {
-        System.out.printf("%sVocê não está cadastrado neste curso!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+        System.out.printf("%sVocê não está cadastrado neste curso!%s%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
     }
 
-    public static void linhasRoxas() {
-        System.out.printf("%s----------------------%s%n", TextColor.COLOR_ROXO, TextColor.COLOR_RESET);
+    public static void cursoRemovido(String nomeCurso) {
+        System.out.printf("%sCurso removido com sucesso!: %s%s%s%n%n", TextColor.COLOR_VERM, TextColor.BOLD_VERM, nomeCurso, TextColor.COLOR_RESET);
     }
 
-    public static void linhasBrancas() {
-        System.out.printf("%s----------------------%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+    public static void erroTotal() {
+        System.out.printf("%sNão foi possível cria um novo diretório!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+    }
+
+    public static void cursoAdicionadoAoSistema(String nomeCurso) {
+        System.out.printf("%sCurso adicionado ao sistema com sucesso!: %s%s%s%n%n", TextColor.COLOR_VERDE, TextColor.BOLD_VERDE, nomeCurso, TextColor.COLOR_RESET);
+    }
+
+    public static void cursoRemovidoDoSistema(String nomeCurso) {
+        System.out.printf("%sCurso removido do sistema com sucesso!: %s%s%s%n%n", TextColor.COLOR_VERM, TextColor.BOLD_VERM, nomeCurso, TextColor.COLOR_RESET);
+    }
+
+    public static void usuarioRemovido(String nomeUser) {
+        System.out.printf("%sUsuário removido do sistema com sucesso!: %s%s%s%n%n", TextColor.COLOR_VERM, TextColor.BOLD_VERM, nomeUser, TextColor.COLOR_RESET);
+    }
+
+    public static void notCadastro() {
+        System.out.printf("%sNão foi possível fazer cadastro!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+    }
+
+    public static void opcaoInvalida() {
+        System.out.printf("%sOpção inválida!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+    }
+
+    public static void semUsuarioCadastrado() {
+        System.out.printf("%sO sistema não possui NENHUM usuário cadastrado!%s%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
     }
 }

@@ -28,11 +28,9 @@ public class Solicita {
 
     public static String tipoUser() {
         Leitor leitor = Leitor.getInstance();
-        System.out.printf("Administrador [A] ou usuário comum [U]?: ");
+        System.out.printf("%sAdmin [A] ou user [U]?: %s", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
         try {
-            String tipoUser = leitor.nextLine();
-            System.out.println();
-            return tipoUser;
+            return leitor.nextLine();
         } catch(ExcecaoLeitorFechado e) {
             e.printStackTrace();
             System.exit(1);
@@ -71,7 +69,7 @@ public class Solicita {
 
     public static int idQuestao() {
         Leitor leitor = Leitor.getInstance();
-        System.out.printf("Digite o id da questao: ");
+        System.out.printf("Digite o id da questão: ");
         int resp;
 
         try {
@@ -89,7 +87,7 @@ public class Solicita {
 
     public static int idModulo() {
         Leitor leitor = Leitor.getInstance();
-        System.out.printf("Digite o id da modulo: ");
+        System.out.printf("Digite o id do módulo: ");
         int resp;
 
         try {
@@ -105,7 +103,6 @@ public class Solicita {
     }
 
     public static boolean desejaContinuar() {
-        Leitor leitor = Leitor.getInstance();
         System.out.printf("%sDeseja continuar?%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
         System.out.println("[1] Sim");
         System.out.println("[2] Não\n");
@@ -113,5 +110,31 @@ public class Solicita {
 
         if(resp == 1) return true;
         else return false;
+    }
+
+    public static Object resposta(String tipo) {
+        Leitor leitor = Leitor.getInstance();
+        System.out.print("Digite sua resposta: ");
+        Object resp = null;
+
+        if(tipo.equals("MUL")) {
+            try {
+                resp = leitor.nextInt();
+                leitor.nextLine();
+            } catch(ExcecaoLeitorFechado e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+        }
+        if(tipo.equals("DIS")) {
+            try {
+                resp = leitor.nextLine();
+            } catch(ExcecaoLeitorFechado e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+        }
+        System.out.println();
+        return resp;
     }
 }

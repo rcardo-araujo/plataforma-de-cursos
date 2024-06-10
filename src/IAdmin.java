@@ -4,4 +4,5 @@ public interface IAdmin {
     public void removerUsuario(String username);
     public void listarUsuarios();
     public void listarCursos();
+    public boolean temUsuariosCadastrados();
 }

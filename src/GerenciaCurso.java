@@ -96,9 +96,10 @@ public class GerenciaCurso {
 
     public void imprimeInterfaceCurso() {
         System.out.printf("%s%s%s%n", 
-            TextColor.BOLD_BRAN, 
+            TextColor.BOLD_ROXO, 
             this.curso.getNome(), 
             TextColor.COLOR_RESET);
+        TextColor.linhasBrancas();
         
         for(Map.Entry<Integer, ModuloComum> par : this.curso.getModulos().entrySet()) {
             System.out.printf("[%d] ", par.getKey());
@@ -107,6 +108,8 @@ public class GerenciaCurso {
             System.out.println(par.getValue().getNomeModulo() + TextColor.COLOR_RESET);
         }
 
-        System.out.printf("%n[0] Revisão%n%n");
+        System.out.printf("%n[0] Revisão%n");
+        TextColor.linhasBrancas();
+        System.out.println();
     } 
 }

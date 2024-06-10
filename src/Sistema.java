@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,7 +18,7 @@ public class Sistema {
                 if(c.getNome().equals(nomeCurso)) curso = c;
             }
             if(curso == null) {
-                Mensagens.cursoInexistente();
+                Mensagens.cursoInexistente(nomeCurso);
                 return;
             }
 
@@ -29,25 +30,36 @@ public class Sistema {
                 int k = 0;
                 while(k < files.length){
                     try {
-                        FileReader f = new FileReader(files[k]);
+                        FileInputStream fi = new FileInputStream(files[k]);
+                        InputStreamReader is = new InputStreamReader(fi, StandardCharsets.UTF_8);
+                        BufferedReader br = new BufferedReader(is);
+                        
                         File dest =  new File("./Cursos/"+ nomeCurso + "/" + files[k].getName());
-                        FileWriter d = new FileWriter(dest);
+                        FileOutputStream fo = new FileOutputStream(dest);
+                        OutputStreamWriter os = new OutputStreamWriter(fo, StandardCharsets.UTF_8);
+                        BufferedWriter bw = new BufferedWriter(os);
                         while(true){
-                            int i = f.read();
-                            if(i < 0) break;
-                            d.write(i);
+                            String questao = br.readLine();
+                            if(questao == null) break;
+                            bw.write(questao + "\n");
                         }
-                        f.close();
+                        br.close();
+                        is.close();
+                        fi.close();
+                        bw.close();
+                        os.close();
+                        fo.close();
                         files[k].delete();
-                        d.close();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    oldDir.delete();
                     k++;
                 }
+                oldDir.delete();
+                Mensagens.cursoRemovidoDoSistema(nomeCurso);
+                logAtividade(this.getUsername(), "removeu curso " + nomeCurso + " do sistema");
             } else {
-                System.out.println("ERRO TOTAL");
+                Mensagens.erroTotal();
             }
         }
 
@@ -56,33 +68,47 @@ public class Sistema {
             for(Curso c: cursos){
                 if(c.getNome().equals(nomeCurso)) return;
             }
+            File oldDir = new File("./Cursos/"+ nomeCurso);
+            if(!oldDir.exists()) {
+                Mensagens.cursoInexistente(nomeCurso);
+                return;
+            }
             cursos.add(new Curso(nomeCurso));
             File newDir = new File("./Cursos/Sistema/"+ nomeCurso);
-            File oldDir = new File("./Cursos/"+ nomeCurso);
             if(newDir.mkdir()){
                 File[] files = oldDir.listFiles();
                 int k = 0;
                 while(k < files.length){
                     try {
-                        FileReader f = new FileReader(files[k]);
-                        FileWriter d = new FileWriter("./Cursos/Sistema/"+nomeCurso+"/"+files[k].getName());
+                        FileInputStream fi = new FileInputStream(files[k]);
+                        InputStreamReader is = new InputStreamReader(fi, StandardCharsets.UTF_8);
+                        BufferedReader br = new BufferedReader(is);
+                        
+                        FileOutputStream fo = new FileOutputStream("./Cursos/Sistema/" + nomeCurso + "/"+files[k].getName());
+                        OutputStreamWriter os = new OutputStreamWriter(fo, StandardCharsets.UTF_8);
+                        BufferedWriter bw = new BufferedWriter(os);
                         while(true){
-                            int i = f.read();
-                            if(i < 0) break;
-                            d.write(i);
+                            String questao = br.readLine();
+                            if(questao == null) break;
+                            bw.write(questao + "\n");
                         }
-                        f.close();
+                        br.close();
+                        is.close();
+                        fi.close();
                         files[k].delete();
-                        d.close();
+                        bw.close();
+                        os.close();
+                        fo.close();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     k++;
                 }
                 oldDir.delete();
-                logAtividade(this.getUsername(), "adicionou um curso");
+                Mensagens.cursoAdicionadoAoSistema(nomeCurso);
+                logAtividade(this.getUsername(), "adicionou o curso " + nomeCurso + " ao sistema");
             } else {
-                System.out.println("ERRO TOTAL");
+                Mensagens.erroTotal();
             }
         }
 
@@ -91,9 +117,9 @@ public class Sistema {
             for(CommonUser u: users){
                 if(u.getUsername().equals(username)) {
                     users.remove(u);
-                    System.out.printf("Usuário %s removido com sucesso!%n%n", username);
-                    logAtividade(this.getUsername(), "removeu um usuário");
-                    break;
+                    Mensagens.usuarioRemovido(username);
+                    logAtividade(this.getUsername(), "removeu o usuário " + username + " do sistema");
+                    return;
                 }
             }
             Mensagens.usuarioInexistente();
@@ -101,6 +127,10 @@ public class Sistema {
 
         @Override
         public void listarUsuarios() {
+            if(users.size() == 0) {
+                Mensagens.semUsuarioCadastrado();
+                return;
+            }
             for(CommonUser user : users) {
                 System.out.println(user.getUsername());
             }
@@ -114,6 +144,11 @@ public class Sistema {
                 if(curso.equals("Sistema")) continue;
                 System.out.println(curso);
             }
+        }
+
+        @Override
+        public boolean temUsuariosCadastrados() {
+            return users.size() != 0;
         }
     }
 
@@ -143,12 +178,12 @@ public class Sistema {
             for(Curso c: cursos){
                 if(c.getNome().equals(curso)){
                     Mensagens.foiInscritoNoCurso(curso);
-                    this.meusCursos.add(new GerenciaCurso(c));
-                    logAtividade(this.getUsername(), "se inscreveu em um curso");
+                    this.meusCursos.add(new GerenciaCurso(new Curso("Sistema/" + curso)));
+                    logAtividade(this.getUsername(), "se inscreveu no curso " + curso);
                     return;
                 }
             }
-            Mensagens.cursoInexistente();
+            Mensagens.cursoInexistente(curso);
         }
     
         @Override
@@ -157,12 +192,12 @@ public class Sistema {
             for(GerenciaCurso c: meusCursos){
                 if(c.getNomeCurso().equals(curso)) { 
                     meusCursos.remove(c);
-                    System.out.println("Você saiu do curso " + curso + " com sucesso!\n");
-                    logAtividade(this.getUsername(), "saiu de um curso");
+                    Mensagens.cursoRemovido(curso);
+                    logAtividade(this.getUsername(), "saiu do curso " + curso);
                     return;
                 }
             }
-            Mensagens.cursoInexistente();
+            Mensagens.cursoInexistente(curso);
         }
 
         @Override
@@ -183,9 +218,9 @@ public class Sistema {
             for (GerenciaCurso cur: meusCursos){
                 if(cur.getNomeCurso().equals(nomeCurso)) {c = cur; break;}
             }
-            if(c==null) {Mensagens.cursoInexistente(); return;}
+            if(c==null) {Mensagens.cursoInexistente(nomeCurso); return;}
             c.fazerModulo(c.getNivel());
-            logAtividade(this.getUsername(), "fez sua tarefa atual");
+            logAtividade(this.getUsername(), "fez sua tarefa atual do curso de " + nomeCurso);
         }
 
         @Override
@@ -194,9 +229,11 @@ public class Sistema {
             for (GerenciaCurso cur: meusCursos){
                 if(cur.getNomeCurso().equals(nomeCurso)) {c = cur; break;}
             }
-            if(c==null) {Mensagens.cursoInexistente(); return;}
+            if(c==null) {Mensagens.cursoInexistente(nomeCurso); return;}
             c.fazerModulo(id);
-            logAtividade(this.getUsername(), "fez uma tarefa");
+            if(id <= c.getNivel() && id > 0) logAtividade(this.getUsername(), "acessou o módulo " + c.getCurso().buscarModulo(id).getNomeModulo() + " do curso " + nomeCurso);
+            else if(id == 0) logAtividade(this.getUsername(), "acessou o módulo de revisão curso " + nomeCurso);
+            else logAtividade(this.getUsername(), "tentou acessar o módulo " + c.getCurso().buscarModulo(id).getNomeModulo() + " do curso " + nomeCurso);
         }
 
         @Override
@@ -210,7 +247,7 @@ public class Sistema {
             }
             
             if(curso == null) {
-                Mensagens.cursoInexistente();
+                Mensagens.cursoInexistente(nomeCurso);
                 return;
             }
             curso.imprimeInterfaceCurso();
@@ -218,12 +255,17 @@ public class Sistema {
         }
 
         @Override
-        public boolean temCurso(String nomeCurso) {
+        public boolean cadastradoNoCurso(String nomeCurso) {
             for(GerenciaCurso gc : meusCursos) {
                 if(gc.getNomeCurso().equals(nomeCurso)) return true;
             }
             Mensagens.naoTemCurso();
             return false;
+        }
+
+        @Override
+        public boolean cadastradoEmAlgumCurso() {
+            return meusCursos.size() != 0;
         }
     }
 
@@ -261,23 +303,31 @@ public class Sistema {
 
     public IUser fazerLogin(String username, String password){
         for (CommonUser a: users){
-            if(a.getUsername().equals(username) && a.getPassword().equals(password)) return a;
+            if(a.getUsername().equals(username) && a.getPassword().equals(password)) {
+                logAtividade(username, "fez login");
+                return a;
+            }
         }
         return null;
     }
 
     public IAdmin fazerLoginAdmin(String username, String password){
         for (AdminUser a: admins){
-            if(a.getUsername().equals(username) && a.getPassword().equals(password)) return a;
+            if(a.getUsername().equals(username) && a.getPassword().equals(password)) {
+                logAtividade(username, "fez login");
+                return a;
+            }
         }
         return null;
     }
 
     public void regCommonUser(String username, String password){
+        logAtividade(username, "se cadastrou na plataforma");
         this.users.add(new CommonUser(password, username));
     }
 
     public void regAdminUser(String username, String password){
+        logAtividade(username, "se cadastrou na plataforma");
         AdminUser adm = new AdminUser(password, username);
         this.admins.add(adm);
     }
@@ -291,7 +341,7 @@ public class Sistema {
     private void logAtividade(String userClass, String action){
         try (FileOutputStream log = new FileOutputStream(logName, true)) {
             String data = new java.util.Date().toString();
-            log.write(data.getBytes());
+            log.write((data + " ").getBytes());
             log.write(userClass.getBytes());
             log.write(": ".getBytes());
             log.write(action.getBytes());

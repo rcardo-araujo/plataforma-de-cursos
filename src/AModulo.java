@@ -26,7 +26,7 @@ public abstract class AModulo {
         
         if(questao != null) {    
             imprimeQuestao(id);
-            Object resp = solicitarResposta(questao.getTipo());
+            Object resp = Solicita.resposta(questao.getTipo());
             
             return questao.checaResposta(resp);
         }
@@ -34,32 +34,6 @@ public abstract class AModulo {
             Mensagens.questaoNaoLocalizada();
             return false;
         }
-    }
-
-    public Object solicitarResposta(String tipo) {
-        Leitor leitor = Leitor.getInstance();
-        System.out.print("Digite sua resposta: ");
-        Object resp = null;
-
-        if(tipo.equals("MUL")) {
-            try {
-                resp = leitor.nextInt();
-                leitor.nextLine();
-            } catch(ExcecaoLeitorFechado e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-        }
-        if(tipo.equals("DIS")) {
-            try {
-                resp = leitor.nextLine();
-            } catch(ExcecaoLeitorFechado e) {
-                e.printStackTrace();
-                System.exit(1);
-            }
-        }
-
-        return resp;
     }
 
     public void imprimeQuestao(int id) {

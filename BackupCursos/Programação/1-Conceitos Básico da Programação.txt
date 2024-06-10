@@ -1,0 +1,4 @@
+DIS;Qual é a linguagem de programação mais popular atualmente para front-end?;50;JavaScript
+MUL;O que é um algoritmo?;80;3;Um conjunto de instruções para resolver um problema;Uma linguagem de programação;Um dispositivo de hardware;Um sistema operacional;Uma técnica de criptografia
+MUL;Qual é a estrutura de controle mais utilizada para tomada de decisões em programação?;60;4;while;for;while;if-else;do-while
+MUL;O que é uma variável em programação?;70;1;Uma área de armazenamento de dados com um nome associado;Um conjunto de instruções para resolver um problema;Um tipo de estrutura de controle;Um dispositivo de hardware;Uma técnica de criptografia
