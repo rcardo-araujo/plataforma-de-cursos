@@ -7,15 +7,17 @@ public class Curso {
     private Map<Integer, ModuloComum> modulos;
     private ModuloEspecial moduloRevisao;
 
-    public Curso(String nome) {
-        this.nome = nome;
+    public Curso(String path) {
+        System.out.println(path);
+        if(path.contains("/")) this.nome = path.substring(path.indexOf("/"), path.length());
+        else this.nome = path;
         this.modulos = new LinkedHashMap<>();
         this.moduloRevisao = new ModuloEspecial();
 
-        File f = new File(String.format("./Cursos/%s", nome));
+        File f = new File(String.format("./Cursos/%s", path));
         String[] nomesModulos = f.list();
         for(int i = 0; i < nomesModulos.length; i ++) {
-            ModuloComum nModulo = new ModuloComum(this.nome, nomesModulos[i].substring(0, nomesModulos[i].indexOf(".")));
+            ModuloComum nModulo = new ModuloComum(path, nomesModulos[i].substring(0, nomesModulos[i].indexOf(".")));
             this.modulos.put(i + 1, nModulo);
         }
     }

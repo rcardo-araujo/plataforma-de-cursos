@@ -32,7 +32,6 @@ public class Solicita {
         System.out.printf("%sAdministrador [A] ou usuário comum [U]?: %s ", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
         try {
             String tipoUser = leitor.nextLine();
-            leitor.nextLine();
             System.out.println();
             return tipoUser;
         } catch(ExcecaoLeitorFechado e) {
@@ -47,12 +46,44 @@ public class Solicita {
         System.out.printf("Digite a opção desejada: ");
         try {
             int opcao = leitor.nextInt();
+            leitor.nextLine();
             System.out.println();
             return opcao;
         } catch(ExcecaoLeitorFechado e) {
             e.printStackTrace();
             System.exit(1);
         }
+        return 0;
+    }
+
+    public static String curso() {
+        Leitor leitor = Leitor.getInstance();
+        System.out.printf("%sDigite o nome do curso: %s ", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+        try {
+            String curso = leitor.nextLine();
+            System.out.println();
+            return curso;
+        } catch(ExcecaoLeitorFechado e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return null;
+    }
+
+    public static int id() {
+        Leitor leitor = Leitor.getInstance();
+        System.out.printf("Digite o id da questao: ");
+        int resp;
+
+        try {
+            resp = leitor.nextInt();
+            System.out.println();
+            return resp;
+        } catch(ExcecaoLeitorFechado e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
         return 0;
     }
 }

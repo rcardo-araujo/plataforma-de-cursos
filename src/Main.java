@@ -1,17 +1,17 @@
 public class Main {
+    private static Sistema sistema = Sistema.getInstance();
+    private static Main main = new Main();
+
     public static void main(String[] args) throws Exception { 
         Leitor leitor = Leitor.getInstance();
-        Sistema sistema = Sistema.getInstance();
 
-        // Primeira tela a aparecer
-        // Executar em loop até que ESC seja pressionado
-        System.out.printf("%sTela de login%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
-        System.out.println("[1] Fazer login");
-        System.out.println("[2] Cadastrar-se\n");
-        System.out.println("[ESC] Sair\n");
-        int alt = Solicita.opcao();
-
-            // [1] Fazer login OU [2] Cadastrar-se
+        while(true) {    
+            System.out.printf("%sTela de login%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+            System.out.println("[1] Fazer login");
+            System.out.println("[2] Cadastrar-se\n");
+            System.out.println("[3] Sair\n");
+            
+            int alt = Solicita.opcao();
             if(alt == 1 || alt == 2) {    
                 String tipoUser = Solicita.tipoUser();
                 String username;
@@ -22,30 +22,102 @@ public class Main {
                     username = Solicita.username();
                     pswd = Solicita.pswd();
 
-                    IAdmin userAdmin;
-                    if(tipoUser.equals("A")) {
-                        IAdmin adminUser;
-                        if(alt == 1) adminUser = sistema.fazerLoginAdmin(username, pswd);
-                        
+                    if(alt == 1) {
+                        if(tipoUser.equals("U")) {
+                            IUser commonUser = sistema.fazerLogin(username, pswd);
+                            if(commonUser != null) { 
+                                main.telaCommonUserLogado(commonUser);
+                                break;
+                            }
+                            else Mensagens.notLogin();
+                        }
+                        else if(tipoUser.equals("A")) {
+                            IAdmin adminUser = sistema.fazerLoginAdmin(username, pswd);
+                            if(adminUser != null) {
+                                main.telaAdminLogado(adminUser);
+                                break;
+                            }
+                            else Mensagens.notLogin();
+                        }
+                    }
+                    else if(alt == 2) {
+                        if(tipoUser.equals("U")) {
+                            sistema.regCommonUser(username, pswd);
+                            main.telaCommonUserLogado(sistema.fazerLogin(username, pswd));
+                            break;
+                        }
+                        else if(tipoUser.equals("A")) {
+                            sistema.fazerLoginAdmin(username, pswd);
+                            main.telaAdminLogado(sistema.fazerLoginAdmin(username, pswd));
+                            break;
+                        }
                     }
                 }
             }  
-            
-            // [03] Sair
-            {
+            else if(alt == 3) {
+                leitor.close();
                 System.exit(0);
             }
+        }
+    }
 
-        // [1] Fazer curso
-        // 1. Exibir a lista de cursos.
-        // 2. Pegar iD do curso
-        // 3. Em loop, até que ESC seja pressionado, exibir módulos do curso
-        // 4. Em loop, até que ESC seja pressionado, permanecer no módulo
-        System.out.println("Qual curso gostaria de fazer agora?: ");
+    public void telaCommonUserLogado(IUser user) {
+        Mensagens.boasVindas();
+        while(true) {
+            System.out.println("[1] Exibir cursos disponíveis");
+            System.out.println("[2] Fazer curso");
+            System.out.println("[3] Inscrever-se em um curso");
+            System.out.println("[4] Sair de um curso\n");
+            System.out.println("[5] Sair para tela de login\n");
 
-        // [02] Exibir cursos disponíveis
+            int alt = Solicita.opcao();
+            if(alt == 1) {
+                System.out.printf("%sLista de cursos:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+                sistema.exibirCursos();
+            }
+            else if(alt == 2) {
 
+            } 
+            else if(alt == 3) {
+                System.out.printf("%sLista de cursos:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+                sistema.exibirCursos();
+                user.inscreverCurso(Solicita.curso());
+            }
+            else if(alt == 4) {
+                System.out.printf("%sMeus cursos:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+                user.mostrarMeusCursos();
+                user.sairCurso(Solicita.curso());
+            }
+            else if(alt == 5) {
+                Mensagens.volteSempre();
+                return;
+            }
+        }
+    }
 
-        leitor.close();
+    public void telaAdminLogado(IAdmin admin) {
+        Mensagens.boasVindas();
+        while(true) {
+            System.out.println("[1] Remover usuário");
+            System.out.println("[2] Adicionar novo curso\n");
+            System.out.println("[3] Sair para tela de login\n");
+
+            int alt = Solicita.opcao();
+            if(alt == 1) {
+                System.out.printf("%sLista de usuários do sistema:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+                admin.listarUsuarios();
+                System.out.println();
+                admin.removerUsuario(Solicita.username());
+            }
+            else if(alt == 2) {
+                System.out.printf("%sLista de cursos que não estão no sistema:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+                admin.listarCursos();
+                admin.adicionarCurso(Solicita.curso());   
+            }
+            else if(alt == 3) {
+                Mensagens.volteSempre();
+                return;
+            }
+        }
     }
 }

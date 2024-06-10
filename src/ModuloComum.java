@@ -2,8 +2,8 @@ public class ModuloComum extends AModulo {
     private String nomeModulo;
     private boolean completo;
 
-    public ModuloComum(String nomeCurso, String nomeModulo){
-        super(String.format("./Cursos/%s/%s", nomeCurso, nomeModulo));
+    public ModuloComum(String path, String nomeModulo){
+        super(String.format("./Cursos/%s/%s", path, nomeModulo));
         this.nomeModulo = nomeModulo;
         this.completo = false;
     }

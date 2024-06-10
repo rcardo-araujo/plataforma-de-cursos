@@ -48,7 +48,7 @@ public class GerenciaCurso {
         ModuloComum modulo = this.curso.buscarModulo(id);
         if(modulo != null) {
             modulo.imprimeModulo();
-            int opcao = solicitarId();
+            int opcao = Solicita.id();
 
             AQuestao questao = modulo.buscarQuestao(id);
             if(questao != null) {
@@ -89,25 +89,8 @@ public class GerenciaCurso {
 
     public void fazerModuloRevisao() {
         this.curso.getModuloRevisao().imprimeModulo();
-        int opcao = solicitarId();
+        int opcao = Solicita.id();
         this.curso.getModuloRevisao().fazerTarefa(opcao);
-    }
-
-    public int solicitarId() {
-        Leitor leitor = Leitor.getInstance();
-        System.out.printf("Digite o id da questao: ");
-        int resp;
-
-        try {
-            resp = leitor.nextInt();
-            System.out.println();
-            return resp;
-        } catch(ExcecaoLeitorFechado e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
-
-        return 0;
     }
 
     public void imprimeInterfaceCurso() {
