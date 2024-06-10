@@ -15,6 +15,32 @@ public class Sistema {
             for(Curso c: cursos){
                 if(c.getNome().equals(curso)) cursos.remove(c);
             }
+            File oldDir = new File("./Cursos/Sistema/"+curso);
+            File newDir = new File("./Cursos/"+curso);
+            if(newDir.mkdir()){
+                File[] files = oldDir.listFiles();
+                int k = 0;
+                while(k < files.length){
+                    try {
+                        FileReader f = new FileReader(files[k]);
+                        File dest =  new File("./Cursos/"+files[k].getName());
+                        FileWriter d = new FileWriter(dest);
+                        while(true){
+                            int i = f.read();
+                            if(i < 0) break;
+                            d.write(i);
+                        }
+                        f.close();
+                        files[k].delete();
+                        d.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    oldDir.delete();
+                }
+            } else {
+                System.out.println("ERRO TOTAL");
+            }
             logAtividade(this.getClass().getName(), "removeu um curso");
         }
 
@@ -23,6 +49,7 @@ public class Sistema {
             for(Curso c: cursos){
                 if(c.getNome().equals(curso)) return;
             }
+            cursos.add(new Curso(curso));
             File newDir = new File("./Cursos/Sistema/"+curso);
             File oldDir = new File("./Cursos/"+curso);
             if(newDir.mkdir()){
@@ -49,7 +76,7 @@ public class Sistema {
             } else {
                 System.out.println("ERRO TOTAL");
             }
-            cursos.add(new Curso(curso));
+            
             logAtividade(this.getClass().getName(), "adicionou um curso");
         }
 
