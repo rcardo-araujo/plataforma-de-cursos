@@ -13,7 +13,7 @@ public class Sistema {
         @Override
         public void removerCurso(String curso) {
             for(Curso c: cursos){
-                if(c.getNome() == curso) cursos.remove(c);
+                if(c.getNome().equals(curso)) cursos.remove(c);
             }
             logAtividade(this.getClass().getName(), "removeu um curso");
         }
@@ -21,7 +21,33 @@ public class Sistema {
         @Override
         public void adicionarCurso(String curso) {
             for(Curso c: cursos){
-                if(c.getNome() == curso) return;
+                if(c.getNome().equals(curso)) return;
+            }
+            File newDir = new File("./Cursos/Sistema/"+curso);
+            File oldDir = new File("./Cursos/"+curso);
+            if(newDir.mkdir()){
+                File[] files = oldDir.listFiles();
+                int k = 0;
+                while(k < files.length){
+                    try {
+                        FileReader f = new FileReader(files[k]);
+                        File dest =  new File("./Cursos/Sistema/"+files[k].getName());
+                        FileWriter d = new FileWriter(dest);
+                        while(true){
+                            int i = f.read();
+                            if(i < 0) break;
+                            d.write(i);
+                        }
+                        f.close();
+                        files[k].delete();
+                        d.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    oldDir.delete();
+                }
+            } else {
+                System.out.println("ERRO TOTAL");
             }
             cursos.add(new Curso(curso));
             logAtividade(this.getClass().getName(), "adicionou um curso");
@@ -30,7 +56,7 @@ public class Sistema {
         @Override
         public void removerUsuario(String username) {
             for(CommonUser u: users){
-                if(u.getUsername() == username) users.remove(u);
+                if(u.getUsername().equals(username)) users.remove(u);
             }
             logAtividade(this.getClass().getName(), "removeu um usuário");
         }
@@ -150,8 +176,7 @@ public class Sistema {
     }
 
     private void logAtividade(String userClass, String action){
-        try{
-            FileOutputStream log = new FileOutputStream(logName, true);
+        try (FileOutputStream log = new FileOutputStream(logName, true)) {
             String data = new java.util.Date().toString();
             log.write(data.getBytes());
             log.write(userClass.getBytes());

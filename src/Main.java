@@ -10,6 +10,7 @@ public class Main {
         System.out.println("[2] Cadastrar-se\n");
         System.out.println("[ESC] Sair\n");
         int alt = Solicita.opcao();
+        
 
             // [1] Fazer login OU [2] Cadastrar-se
             if(alt == 1 || alt == 2) {    
