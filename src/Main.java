@@ -25,7 +25,11 @@ public class Main {
                         IUser commonUser = sistema.fazerLogin(username, pswd);
                         if(commonUser != null) { 
                             main.telaCommonUserLogado(commonUser);
+<<<<<<< HEAD
                             continue;
+=======
+                            break;
+>>>>>>> 7f2a301 (REBASE DO IGOR)
                         }
                         else Mensagens.notLogin();
                     }
@@ -33,7 +37,11 @@ public class Main {
                         IAdmin adminUser = sistema.fazerLoginAdmin(username, pswd);
                         if(adminUser != null) {
                             main.telaAdminLogado(adminUser);
+<<<<<<< HEAD
                             continue;
+=======
+                            break;
+>>>>>>> 7f2a301 (REBASE DO IGOR)
                         }
                         else Mensagens.notLogin();
                     }
@@ -42,12 +50,19 @@ public class Main {
                     if(tipoUser.equals("U")) {
                         sistema.regCommonUser(username, pswd);
                         main.telaCommonUserLogado(sistema.fazerLogin(username, pswd));
+<<<<<<< HEAD
                         continue;
+=======
+>>>>>>> 7f2a301 (REBASE DO IGOR)
                     }
                     else if(tipoUser.equals("A")) {
                         sistema.regAdminUser(username, pswd);
                         main.telaAdminLogado(sistema.fazerLoginAdmin(username, pswd));
+<<<<<<< HEAD
                         continue;
+=======
+                        
+>>>>>>> 7f2a301 (REBASE DO IGOR)
                     }
                 }
             }  
