@@ -58,8 +58,7 @@ public class Sistema {
                 while(k < files.length){
                     try {
                         FileReader f = new FileReader(files[k]);
-                        File dest =  new File("./Cursos/Sistema/"+files[k].getName());
-                        FileWriter d = new FileWriter(dest);
+                        FileWriter d = new FileWriter("./Cursos/Sistema/"+files[k].getName());
                         while(true){
                             int i = f.read();
                             if(i < 0) break;
@@ -71,8 +70,8 @@ public class Sistema {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    oldDir.delete();
                 }
+                oldDir.delete();
             } else {
                 System.out.println("ERRO TOTAL");
             }
@@ -138,6 +137,28 @@ public class Sistema {
             for(GerenciaCurso c: this.meusCursos){
                 System.out.println(c.getNomeCurso());
             }
+        }
+
+        @Override
+        public void fazerTarefa(String nomeCurso){
+            GerenciaCurso c = null;
+            for (GerenciaCurso cur: meusCursos){
+                if(cur.getNomeCurso().equals(nomeCurso)) {c = cur; break;}
+            }
+            if(c==null) {Mensagens.moduloNaoLocalizado(); return;}
+            c.fazerModulo(c.getNivel());
+            logAtividade(this.getUsername(), "fez sua tarefa atual");
+        }
+
+        @Override
+        public void fazerTarefa(String nomeCurso, int id){
+            GerenciaCurso c = null;
+            for (GerenciaCurso cur: meusCursos){
+                if(cur.getNomeCurso().equals(nomeCurso)) {c = cur; break;}
+            }
+            if(c==null) {Mensagens.moduloNaoLocalizado(); return;}
+            c.fazerModulo(id);
+            logAtividade(this.getUsername(), "fez uma tarefa");
         }
     }
 
