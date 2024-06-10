@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.io.File;
 
 public class Sistema {
     public class AdminUser extends AUser implements IAdmin {
@@ -16,6 +15,32 @@ public class Sistema {
             for(Curso c: cursos){
                 if(c.getNome().equals(curso)) cursos.remove(c);
             }
+            File oldDir = new File("./Cursos/Sistema/"+curso);
+            File newDir = new File("./Cursos/"+curso);
+            if(newDir.mkdir()){
+                File[] files = oldDir.listFiles();
+                int k = 0;
+                while(k < files.length){
+                    try {
+                        FileReader f = new FileReader(files[k]);
+                        File dest =  new File("./Cursos/"+files[k].getName());
+                        FileWriter d = new FileWriter(dest);
+                        while(true){
+                            int i = f.read();
+                            if(i < 0) break;
+                            d.write(i);
+                        }
+                        f.close();
+                        files[k].delete();
+                        d.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    oldDir.delete();
+                }
+            } else {
+                System.out.println("ERRO TOTAL");
+            }
             logAtividade(this.getClass().getName(), "removeu um curso");
         }
 
@@ -25,6 +50,32 @@ public class Sistema {
                 if(c.getNome().equals(nomeCurso)) return;
             }
             cursos.add(new Curso(nomeCurso));
+            File newDir = new File("./Cursos/Sistema/"+ nomeCurso);
+            File oldDir = new File("./Cursos/"+ nomeCurso);
+            if(newDir.mkdir()){
+                File[] files = oldDir.listFiles();
+                int k = 0;
+                while(k < files.length){
+                    try {
+                        FileReader f = new FileReader(files[k]);
+                        FileWriter d = new FileWriter("./Cursos/Sistema/"+files[k].getName());
+                        while(true){
+                            int i = f.read();
+                            if(i < 0) break;
+                            d.write(i);
+                        }
+                        f.close();
+                        files[k].delete();
+                        d.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                oldDir.delete();
+            } else {
+                System.out.println("ERRO TOTAL");
+            }
+
             logAtividade(this.getClass().getName(), "adicionou um curso");
         }
 
@@ -112,6 +163,28 @@ public class Sistema {
                 System.out.println(c.getNomeCurso());
             }
         }
+
+        @Override
+        public void fazerTarefa(String nomeCurso){
+            GerenciaCurso c = null;
+            for (GerenciaCurso cur: meusCursos){
+                if(cur.getNomeCurso().equals(nomeCurso)) {c = cur; break;}
+            }
+            if(c==null) {Mensagens.moduloNaoLocalizado(); return;}
+            c.fazerModulo(c.getNivel());
+            logAtividade(this.getUsername(), "fez sua tarefa atual");
+        }
+
+        @Override
+        public void fazerTarefa(String nomeCurso, int id){
+            GerenciaCurso c = null;
+            for (GerenciaCurso cur: meusCursos){
+                if(cur.getNomeCurso().equals(nomeCurso)) {c = cur; break;}
+            }
+            if(c==null) {Mensagens.moduloNaoLocalizado(); return;}
+            c.fazerModulo(id);
+            logAtividade(this.getUsername(), "fez uma tarefa");
+        }
     }
 
     private static Sistema instancia = null;
@@ -177,8 +250,7 @@ public class Sistema {
     }
 
     private void logAtividade(String userClass, String action){
-        try{
-            FileOutputStream log = new FileOutputStream(logName, true);
+        try (FileOutputStream log = new FileOutputStream(logName, true)) {
             String data = new java.util.Date().toString();
             log.write(data.getBytes());
             log.write(userClass.getBytes());
