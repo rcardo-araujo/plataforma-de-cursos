@@ -136,13 +136,13 @@ public class Sistema {
             if(!this.existe()) return;
             for(GerenciaCurso c: meusCursos){
                 if(c.getNomeCurso().equals(curso)){
-                    System.out.println("Você já está inscrito!\n");
+                    Mensagens.jaInscritoNoCurso();;
                     return;
                 }
             }
             for(Curso c: cursos){
                 if(c.getNome().equals(curso)){
-                    System.out.println("Você foi inscrito no curso " + curso + "\n");
+                    Mensagens.foiInscritoNoCurso(curso);
                     this.meusCursos.add(new GerenciaCurso(c));
                     logAtividade(this.getUsername(), "se inscreveu em um curso");
                     return;
@@ -167,7 +167,12 @@ public class Sistema {
 
         @Override
         public void mostrarMeusCursos(){
-            for(GerenciaCurso c: this.meusCursos){
+            if(meusCursos.size() == 0) {
+                Mensagens.semCadastroEmCursos();
+                return;
+            }
+            
+            for(GerenciaCurso c : this.meusCursos){
                 System.out.println(c.getNomeCurso());
             }
         }
@@ -210,6 +215,15 @@ public class Sistema {
             }
             curso.imprimeInterfaceCurso();
             logAtividade(this.getUsername(), "listou os módulos do curso " + nomeCurso);
+        }
+
+        @Override
+        public boolean temCurso(String nomeCurso) {
+            for(GerenciaCurso gc : meusCursos) {
+                if(gc.getNomeCurso().equals(nomeCurso)) return true;
+            }
+            Mensagens.naoTemCurso();
+            return false;
         }
     }
 
@@ -281,7 +295,7 @@ public class Sistema {
             log.write(userClass.getBytes());
             log.write(": ".getBytes());
             log.write(action.getBytes());
-            log.write(" \n".getBytes());
+            log.write("\n".getBytes());
             log.close();
         } catch(IOException e){
             e.printStackTrace();

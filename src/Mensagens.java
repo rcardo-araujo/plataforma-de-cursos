@@ -32,15 +32,15 @@ public class Mensagens {
     }
 
     public static void boasVindas() {
-        System.out.printf("%sSeja muito bem-vindo!%s%n%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+        System.out.printf("%sSeja muito bem-vindo!%s%n%n", TextColor.BOLD_AMAR, TextColor.COLOR_RESET);
     }
 
     public static void jaInscritoNoCurso() {
-        System.out.printf("%sSeja muito bem-vindo!%s%n%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+        System.out.printf("%sVocê já está inscrito no curso!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
     }
 
-    public static void foiInscritoNoCurso() {
-        System.out.printf("%sSeja muito bem-vindo!%s%n%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+    public static void foiInscritoNoCurso(String nomeCurso) {
+        System.out.printf("%sCurso desbloqueado: %sFutebol!%s%n%n", TextColor.COLOR_VERDE, TextColor.BOLD_VERDE, TextColor.COLOR_RESET);
     }
 
     public static void cursoInexistente() {
@@ -53,5 +53,21 @@ public class Mensagens {
 
     public static void volteSempre() {
         System.out.printf("%sVolte sempre!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+    }
+
+    public static void semCadastroEmCursos() {
+        System.out.printf("%sVocê ainda não se cadastrou em NENHUM curso!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+    }
+
+    public static void naoTemCurso() {
+        System.out.printf("%sVocê não está cadastrado neste curso!%s%n%n", TextColor.COLOR_AMAR, TextColor.COLOR_RESET);
+    }
+
+    public static void linhasRoxas() {
+        System.out.printf("%s----------------------%s%n", TextColor.COLOR_ROXO, TextColor.COLOR_RESET);
+    }
+
+    public static void linhasBrancas() {
+        System.out.printf("%s----------------------%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
     }
 }

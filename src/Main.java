@@ -6,10 +6,13 @@ public class Main {
         Leitor leitor = Leitor.getInstance();
 
         while(true) {    
-            System.out.printf("%sTela de login%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+            System.out.printf("%sTela de Login%s%n", TextColor.BOLD_AZUL, TextColor.COLOR_RESET);
+            Mensagens.linhasBrancas();
             System.out.println("[1] Fazer login");
             System.out.println("[2] Cadastrar-se\n");
-            System.out.println("[3] Sair\n");
+            System.out.printf("[3] %sSair%s%n", TextColor.COLOR_VERM, TextColor.COLOR_RESET);
+            Mensagens.linhasBrancas();
+            System.out.println();
             
             int alt = Solicita.opcao();
             if(alt == 1 || alt == 2) {    
@@ -61,48 +64,58 @@ public class Main {
     public void telaCommonUserLogado(IUser user) {
         Mensagens.boasVindas();
         while(true) {
+            System.out.printf("%sTela Inicial%s%n", TextColor.BOLD_AZUL, TextColor.COLOR_RESET);
+            Mensagens.linhasBrancas();
             System.out.println("[1] Exibir cursos disponíveis");
             System.out.println("[2] Fazer curso");
             System.out.println("[3] Inscrever-se em um curso");
             System.out.println("[4] Sair de um curso\n");
-            System.out.println("[5] Sair para tela de login\n");
+            System.out.printf("[4] %sSair para tela de login%s%n", TextColor.COLOR_VERM, TextColor.COLOR_RESET);
+            Mensagens.linhasBrancas();
+            System.out.println();
 
             int alt = Solicita.opcao();
             if(alt == 1) {
-                System.out.printf("%sLista de cursos:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+                System.out.printf("%sCursos disponíveis:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
                 sistema.exibirCursos();
+                System.out.println();
             }
             else if(alt == 2) {
                 System.out.printf("%sMeus cursos:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
                 user.mostrarMeusCursos();
+                System.out.println();
                 String nomeCurso = Solicita.curso();
-                
-                System.out.println("[1] Continuar");
-                System.out.println("[2] Escolher módulo");
-                int alt2 = Solicita.opcao();
-                if(alt == 2) user.listarModulos(nomeCurso);
-                
-                while(true) {    
-                    if(alt2 == 1) {
-                        user.fazerTarefa(nomeCurso);
-                    }
-                    else if(alt2 == 2) {
-                        user.fazerTarefa(nomeCurso, Solicita.idModulo());
-                    }
+                if(user.temCurso(nomeCurso)) {
+                    System.out.println("[1] Continuar");
+                    System.out.println("[2] Escolher módulo\n");
+                    int altB = Solicita.opcao();
+                    int idModulo = 1;
 
-                    System.out.printf("%sDeseja continuar?%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
-                    System.out.println("[1] Sim");
-                    System.out.println("[2] Não");
-                    if(Solicita.opcao() == 2) break;
+                    while(true) {  
+                        if(altB == 2) {
+                            user.listarModulos(nomeCurso);
+                            System.out.printf("[5] %sVoltar%s%n%n", TextColor.COLOR_VERM, TextColor.COLOR_RESET);
+                            idModulo = Solicita.idModulo();
+                        }
+                        while(true) {    
+                            if(altB == 1) {
+                                altB = 2;
+                                user.fazerTarefa(nomeCurso);
+                                if(!Solicita.desejaContinuar()) break;
+                            }
+                            else if(altB == 2) {
+                                user.fazerTarefa(nomeCurso, idModulo);
+                                if(!Solicita.desejaContinuar()) break;  
+                            }
+                        }
+                    }
                 }
             } 
             else if(alt == 3) {
                 System.out.printf("%sLista de cursos:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
                 sistema.exibirCursos();
-                String s = Solicita.curso();
-                System.out.println(s);
-                System.out.println("bla");
-                user.inscreverCurso(s);
+                System.out.println();
+                user.inscreverCurso(Solicita.curso());
             }
             else if(alt == 4) {
                 System.out.printf("%sMeus cursos:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
@@ -123,7 +136,7 @@ public class Main {
             System.out.println("[1] Remover usuário");
             System.out.println("[2] Adicionar novo curso");
             System.out.println("[3] Remover curso");
-            System.out.println("[4] Sair para tela de login\n");
+            System.out.printf("[4] %sSair para tela de login%s%n%n", TextColor.COLOR_VERM, TextColor.COLOR_RESET);
 
             int alt = Solicita.opcao();
             if(alt == 1) {

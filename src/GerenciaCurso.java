@@ -54,12 +54,10 @@ public class GerenciaCurso {
             if(questao != null) {
                 if(modulo.fazerTarefa(opcao)) {
                     int pontosQuestao = modulo.getPontosQuestao(opcao);
-                    System.out.println(pontosQuestao);
                     if(pontosQuestao != 0)  {
                         questao.setCerta(true);
                         this.pontos += pontosQuestao;
                         if(modulo.verificaModuloCompleto()) {
-                            System.out.println("BLA");
                             if(this.nivel < this.curso.getModulos().size()) {
                                 this.nivel ++;
                                 Mensagens.moduloDesbloqueado(this.curso.buscarModulo(this.nivel).getNomeModulo());

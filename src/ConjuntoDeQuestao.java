@@ -104,7 +104,9 @@ public class ConjuntoDeQuestao {
     public void imprimeHeaders() {
         for(Map.Entry<Integer, AQuestao> par : this.conjunto.entrySet()) { 
             System.out.printf("[%d] ", par.getKey());
+            if(par.getValue().getCerta()) System.out.printf("%s", TextColor.COLOR_VERDE);
             par.getValue().imprimeHeader();
+            System.out.printf("%s", TextColor.COLOR_RESET);
         }
     }
 

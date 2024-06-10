@@ -5,4 +5,5 @@ public interface IUser{
     public void fazerTarefa(String nomeCurso);
     public void fazerTarefa(String nomeCurso, int id);
     public void listarModulos(String nomeCurso);
+    public boolean temCurso(String nomeCurso);
 }

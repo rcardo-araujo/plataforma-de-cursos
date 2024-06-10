@@ -54,8 +54,7 @@ public abstract class AQuestao {
     }
 
     public void imprimeHeader() {
-        if(this.certa) System.out.printf("%s(%d pontos) %s%s%n", TextColor.COLOR_VERDE, this.pontos, this.enunciado, TextColor.COLOR_RESET);
-        else System.out.printf("(%d pontos) %s%n", this.pontos, this.enunciado);
+        System.out.printf("(%d pontos) %s%n", this.pontos, this.enunciado);
     }
 
     public abstract boolean checaResposta(Object respostaUser);

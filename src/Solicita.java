@@ -57,7 +57,7 @@ public class Solicita {
 
     public static String curso() {
         Leitor leitor = Leitor.getInstance();
-        System.out.printf("%sDigite o nome do curso: %s ", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+        System.out.printf("Digite o nome do curso: ");
         try {
             String curso = leitor.nextLine();
             System.out.println();
@@ -102,5 +102,16 @@ public class Solicita {
         }
 
         return 0;
+    }
+
+    public static boolean desejaContinuar() {
+        Leitor leitor = Leitor.getInstance();
+        System.out.printf("%sDeseja continuar?%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
+        System.out.println("[1] Sim");
+        System.out.println("[2] Não\n");
+        int resp = opcao();
+
+        if(resp == 1) return true;
+        else return false;
     }
 }

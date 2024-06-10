@@ -43,5 +43,6 @@ public class ModuloEspecial extends AModulo {
         for(Map.Entry<Integer, AQuestao> par : conj.entrySet()) {
             System.out.printf("[%d] %s%n", par.getKey(), par.getValue().getEnunciado());
         }
+        System.out.println();
     }
 }
