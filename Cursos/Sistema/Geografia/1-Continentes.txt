@@ -1,5 +1,5 @@
-MUL;Qual é o maior continente do mundo?;50;2;África;Ásia;Europa;América do Norte;Oceania
+MUL;Qual é o maior continente do mundo?;50;2;�?frica;�?sia;Europa;América do Norte;Oceania
 DIS;Qual é o único continente que está presente em todos os hemisférios?;70;Eurásia
-MUL;Qual é o menor continente do mundo?;100;5;Europa;América do Sul;Ásia;Oceania;Antártida
-DIS;Qual continente possui a maior população do mundo?;80;Ásia
-MUL;Qual é o único continente cortado pelo Trópico de Capricórnio?;120;3;África;Ásia;América do Sul;Oceania
+MUL;Qual é o menor continente do mundo?;100;5;Europa;América do Sul;�?sia;Oceania;Antártida
+DIS;Qual continente possui a maior população do mundo?;80;�?sia
+MUL;Qual é o único continente cortado pelo Trópico de Capricórnio?;120;3;�?frica;�?sia;América do Sul;Oceania

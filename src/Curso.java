@@ -8,7 +8,6 @@ public class Curso {
     private ModuloEspecial moduloRevisao;
 
     public Curso(String path) {
-        System.out.println(path);
         if(path.contains("/")) this.nome = path.substring(path.indexOf("/"), path.length());
         else this.nome = path;
         this.modulos = new LinkedHashMap<>();

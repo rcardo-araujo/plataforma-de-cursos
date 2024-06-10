@@ -1,4 +1,4 @@
-MUL;Qual é o maior oceano do mundo?;70;3;Oceano Atlântico;Oceano Índico;Oceano Pacífico;Oceano Glacial Ártico;Oceano Antártico
+MUL;Qual é o maior oceano do mundo?;70;3;Oceano Atlântico;Oceano �?ndico;Oceano Pacífico;Oceano Glacial �?rtico;Oceano Antártico
 DIS;Qual oceano é conhecido como "o berço da vida"?;90;Oceano Pacífico
 MUL;Qual a porcentagem dos oceanos em relação ao total de água da Terra?;70;3;80%;90%;97%;99%
 DIS;Qual oceano possui a maior extensão de água salgada?;100;Oceano Pacífico

@@ -11,19 +11,26 @@ public class Sistema {
         }
 
         @Override
-        public void removerCurso(String curso) {
+        public void removerCurso(String nomeCurso) {
+            Curso curso = null;
             for(Curso c: cursos){
-                if(c.getNome().equals(curso)) cursos.remove(c);
+                if(c.getNome().equals(nomeCurso)) curso = c;
             }
-            File oldDir = new File("./Cursos/Sistema/"+curso);
-            File newDir = new File("./Cursos/"+curso);
+            if(curso == null) {
+                Mensagens.cursoInexistente();
+                return;
+            }
+
+            cursos.remove(curso);
+            File oldDir = new File("./Cursos/Sistema/"+nomeCurso);
+            File newDir = new File("./Cursos/"+nomeCurso);
             if(newDir.mkdir()){
                 File[] files = oldDir.listFiles();
                 int k = 0;
                 while(k < files.length){
                     try {
                         FileReader f = new FileReader(files[k]);
-                        File dest =  new File("./Cursos/"+files[k].getName());
+                        File dest =  new File("./Cursos/"+ nomeCurso + "/" + files[k].getName());
                         FileWriter d = new FileWriter(dest);
                         while(true){
                             int i = f.read();
@@ -37,6 +44,7 @@ public class Sistema {
                         e.printStackTrace();
                     }
                     oldDir.delete();
+                    k++;
                 }
             } else {
                 System.out.println("ERRO TOTAL");
@@ -58,7 +66,7 @@ public class Sistema {
                 while(k < files.length){
                     try {
                         FileReader f = new FileReader(files[k]);
-                        FileWriter d = new FileWriter("./Cursos/Sistema/"+files[k].getName());
+                        FileWriter d = new FileWriter("./Cursos/Sistema/" +files[k].getName());
                         while(true){
                             int i = f.read();
                             if(i < 0) break;
@@ -136,11 +144,11 @@ public class Sistema {
                 if(c.getNome().equals(curso)){
                     System.out.println("Você foi inscrito no curso " + curso + "\n");
                     this.meusCursos.add(new GerenciaCurso(c));
-                    break;
+                    logAtividade(this.getUsername(), "se inscreveu em um curso");
+                    return;
                 }
             }
             Mensagens.cursoInexistente();
-            logAtividade(this.getUsername(), "se inscreveu em um curso");
         }
     
         @Override
@@ -150,7 +158,7 @@ public class Sistema {
                 if(c.getNomeCurso().equals(curso)) { 
                     meusCursos.remove(c);
                     System.out.println("Você saiu do curso " + curso + " com sucesso!\n");
-                    break;
+                    return;
                 }
             }
             Mensagens.cursoInexistente();
@@ -170,7 +178,7 @@ public class Sistema {
             for (GerenciaCurso cur: meusCursos){
                 if(cur.getNomeCurso().equals(nomeCurso)) {c = cur; break;}
             }
-            if(c==null) {Mensagens.moduloNaoLocalizado(); return;}
+            if(c==null) {Mensagens.cursoInexistente(); return;}
             c.fazerModulo(c.getNivel());
             logAtividade(this.getUsername(), "fez sua tarefa atual");
         }
@@ -181,9 +189,27 @@ public class Sistema {
             for (GerenciaCurso cur: meusCursos){
                 if(cur.getNomeCurso().equals(nomeCurso)) {c = cur; break;}
             }
-            if(c==null) {Mensagens.moduloNaoLocalizado(); return;}
+            if(c==null) {Mensagens.cursoInexistente(); return;}
             c.fazerModulo(id);
             logAtividade(this.getUsername(), "fez uma tarefa");
+        }
+
+        @Override
+        public void listarModulos(String nomeCurso) {
+            GerenciaCurso curso = null;
+            for(GerenciaCurso c : meusCursos) {
+                if(c.getNomeCurso().equals(nomeCurso)) {
+                    curso = c;
+                    break;
+                }
+            }
+            
+            if(curso == null) {
+                Mensagens.cursoInexistente();
+                return;
+            }
+            curso.imprimeInterfaceCurso();
+            logAtividade(this.getUsername(), "listou os módulos do curso " + nomeCurso);
         }
     }
 
@@ -203,7 +229,6 @@ public class Sistema {
             File[] lista = dir.listFiles();
             if(lista != null){
                 for (File f: lista){
-                    System.out.println(f.getName());
                     cursos.add(new Curso("Sistema/" + f.getName()));
                 }
             }

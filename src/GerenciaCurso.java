@@ -48,16 +48,18 @@ public class GerenciaCurso {
         ModuloComum modulo = this.curso.buscarModulo(id);
         if(modulo != null) {
             modulo.imprimeModulo();
-            int opcao = Solicita.id();
+            int opcao = Solicita.idQuestao();
 
-            AQuestao questao = modulo.buscarQuestao(id);
+            AQuestao questao = modulo.buscarQuestao(opcao);
             if(questao != null) {
                 if(modulo.fazerTarefa(opcao)) {
-                    int pontosQuestao = modulo.getPontosQuestao(id);
-                    if(pontos != 0)  {
+                    int pontosQuestao = modulo.getPontosQuestao(opcao);
+                    System.out.println(pontosQuestao);
+                    if(pontosQuestao != 0)  {
                         questao.setCerta(true);
                         this.pontos += pontosQuestao;
                         if(modulo.verificaModuloCompleto()) {
+                            System.out.println("BLA");
                             if(this.nivel < this.curso.getModulos().size()) {
                                 this.nivel ++;
                                 Mensagens.moduloDesbloqueado(this.curso.buscarModulo(this.nivel).getNomeModulo());
@@ -89,8 +91,9 @@ public class GerenciaCurso {
 
     public void fazerModuloRevisao() {
         this.curso.getModuloRevisao().imprimeModulo();
-        int opcao = Solicita.id();
-        this.curso.getModuloRevisao().fazerTarefa(opcao);
+        int opcao = Solicita.idQuestao();
+        if(this.curso.getModuloRevisao().fazerTarefa(opcao)) Mensagens.respostaCerta();
+        else Mensagens.respostaErrada();
     }
 
     public void imprimeInterfaceCurso() {

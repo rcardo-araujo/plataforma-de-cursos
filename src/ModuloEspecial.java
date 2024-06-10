@@ -12,19 +12,22 @@ public class ModuloEspecial extends AModulo {
     }
 
     public int getMenorQtdErros() {
-        int id = 0;
+        if(!this.cheio()) return 0;
+        
         int min = Integer.MAX_VALUE;
         for(Map.Entry<Integer, AQuestao> par : getQuestoes().getConjunto().entrySet()) {
             if(par.getValue().getQtdErros() < min) {
                 min = par.getValue().getQtdErros();
-                id = par.getKey();
             }
         }
-        return id;
+        if(min == Integer.MAX_VALUE) return 0;
+        return min;
     }
 
     @Override
     public void adicionarQuestao(AQuestao nQuestao) {
+        if(this.getQuestoes().existeQuestao(nQuestao)) return;
+
         if(this.cheio()) {
             int idSub = this.getMenorQtdErros();
             this.getQuestoes().adicionaQuestao(idSub, nQuestao);

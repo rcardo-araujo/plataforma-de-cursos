@@ -50,11 +50,12 @@ public abstract class AQuestao {
     }
 
     public void adicionarErro() {
-        this.pontos += 1;
+        this.qtdErros += 1;
     }
 
     public void imprimeHeader() {
-        System.out.printf("(%d pontos) %s%n", this.pontos, this.enunciado);
+        if(this.certa) System.out.printf("%s(%d pontos) %s%s%n", TextColor.COLOR_VERDE, this.pontos, this.enunciado, TextColor.COLOR_RESET);
+        else System.out.printf("(%d pontos) %s%n", this.pontos, this.enunciado);
     }
 
     public abstract boolean checaResposta(Object respostaUser);

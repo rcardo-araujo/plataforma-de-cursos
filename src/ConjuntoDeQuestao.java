@@ -90,6 +90,13 @@ public class ConjuntoDeQuestao {
         return this.conjunto.get(id);
     }
 
+    public boolean existeQuestao(AQuestao questao) {
+        for(AQuestao q : this.conjunto.values()) {
+            if(questao.getEnunciado().equals(q.getEnunciado())) return true; 
+        }
+        return false;
+    }
+
     public boolean vazio() {
         return this.getNumQuestoes() == 0;
     }
