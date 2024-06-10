@@ -13,6 +13,4 @@ public abstract class AUser {
     public String getPassword(){
         return this.pswd;
     }
-    
-    //public abstract void inscrever(String s);
 }

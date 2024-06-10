@@ -37,11 +37,11 @@ public class Sistema {
                         e.printStackTrace();
                     }
                     oldDir.delete();
+                    logAtividade(this.getUsername(), "removeu um curso");
                 }
             } else {
                 System.out.println("ERRO TOTAL");
             }
-            logAtividade(this.getClass().getName(), "removeu um curso");
         }
 
         @Override
@@ -58,7 +58,7 @@ public class Sistema {
                 while(k < files.length){
                     try {
                         FileReader f = new FileReader(files[k]);
-                        FileWriter d = new FileWriter("./Cursos/Sistema/"+files[k].getName());
+                        FileWriter d = new FileWriter("./Cursos/Sistema/"+nomeCurso+"/"+files[k].getName());
                         while(true){
                             int i = f.read();
                             if(i < 0) break;
@@ -70,13 +70,13 @@ public class Sistema {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    k++;
                 }
                 oldDir.delete();
+                logAtividade(this.getUsername(), "adicionou um curso");
             } else {
                 System.out.println("ERRO TOTAL");
             }
-
-            logAtividade(this.getClass().getName(), "adicionou um curso");
         }
 
         @Override
@@ -85,11 +85,11 @@ public class Sistema {
                 if(u.getUsername().equals(username)) {
                     users.remove(u);
                     System.out.printf("Usuário %s removido com sucesso!%n%n", username);
+                    logAtividade(this.getUsername(), "removeu um usuário");
                     break;
                 }
             }
             Mensagens.usuarioInexistente();
-            logAtividade(this.getClass().getName(), "removeu um usuário");
         }
 
         @Override
@@ -101,9 +101,10 @@ public class Sistema {
 
         @Override
         public void listarCursos() {
-            File f = new File("./Cursos");
+            File f = new File("./Cursos/");
             String[] nomeCursos = f.list();
             for(String curso : nomeCursos) {
+                if(curso.equals("Sistema")) continue;
                 System.out.println(curso);
             }
         }
@@ -136,11 +137,11 @@ public class Sistema {
                 if(c.getNome().equals(curso)){
                     System.out.println("Você foi inscrito no curso " + curso + "\n");
                     this.meusCursos.add(new GerenciaCurso(c));
-                    break;
+                    logAtividade(this.getUsername(), "se inscreveu em um curso");
+                    return;
                 }
             }
             Mensagens.cursoInexistente();
-            logAtividade(this.getUsername(), "se inscreveu em um curso");
         }
     
         @Override
@@ -150,11 +151,11 @@ public class Sistema {
                 if(c.getNomeCurso().equals(curso)) { 
                     meusCursos.remove(c);
                     System.out.println("Você saiu do curso " + curso + " com sucesso!\n");
-                    break;
+                    logAtividade(this.getUsername(), "saiu de um curso");
+                    return;
                 }
             }
             Mensagens.cursoInexistente();
-            logAtividade(this.getUsername(), "saiu de um curso");
         }
 
         @Override
@@ -256,7 +257,7 @@ public class Sistema {
             log.write(userClass.getBytes());
             log.write(": ".getBytes());
             log.write(action.getBytes());
-            log.write("\\ \n".getBytes());
+            log.write(" \n".getBytes());
             log.close();
         } catch(IOException e){
             e.printStackTrace();
