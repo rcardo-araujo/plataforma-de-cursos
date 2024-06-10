@@ -99,7 +99,10 @@ public class Main {
             else if(alt == 3) {
                 System.out.printf("%sLista de cursos:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
                 sistema.exibirCursos();
-                user.inscreverCurso(Solicita.curso());
+                String s = Solicita.curso();
+                System.out.println(s);
+                System.out.println("bla");
+                user.inscreverCurso(s);
             }
             else if(alt == 4) {
                 System.out.printf("%sMeus cursos:%s%n", TextColor.BOLD_BRAN, TextColor.COLOR_RESET);
