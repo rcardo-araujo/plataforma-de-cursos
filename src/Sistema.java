@@ -117,6 +117,9 @@ public class Sistema {
             for(CommonUser u: users){
                 if(u.getUsername().equals(username)) {
                     users.remove(u);
+                    armazenarUsuarios();
+                    File f = new File("./users/"+username);
+                    f.delete();
                     Mensagens.usuarioRemovido(username);
                     logAtividade(this.getUsername(), "removeu o usuário " + username + " do sistema");
                     return;
@@ -180,6 +183,7 @@ public class Sistema {
                     Mensagens.foiInscritoNoCurso(curso);
                     this.meusCursos.add(new GerenciaCurso(new Curso("Sistema/" + curso)));
                     logAtividade(this.getUsername(), "se inscreveu no curso " + curso);
+                    armazenarUsuarios();
                     return;
                 }
             }
@@ -194,6 +198,7 @@ public class Sistema {
                     meusCursos.remove(c);
                     Mensagens.cursoRemovido(curso);
                     logAtividade(this.getUsername(), "saiu do curso " + curso);
+                    armazenarUsuarios();
                     return;
                 }
             }
@@ -220,6 +225,7 @@ public class Sistema {
             }
             if(c==null) {Mensagens.cursoInexistente(nomeCurso); return;}
             c.fazerModulo(c.getNivel());
+            armazenarUsuarios();
             logAtividade(this.getUsername(), "fez sua tarefa atual do curso de " + nomeCurso);
         }
 
@@ -231,6 +237,7 @@ public class Sistema {
             }
             if(c==null) {Mensagens.cursoInexistente(nomeCurso); return;}
             c.fazerModulo(id);
+            armazenarUsuarios();
             if(id <= c.getNivel() && id > 0) logAtividade(this.getUsername(), "acessou o módulo " + c.getCurso().buscarModulo(id).getNomeModulo() + " do curso " + nomeCurso);
             else if(id == 0) logAtividade(this.getUsername(), "acessou o módulo de revisão curso " + nomeCurso);
             else logAtividade(this.getUsername(), "tentou acessar o módulo " + c.getCurso().buscarModulo(id).getNomeModulo() + " do curso " + nomeCurso);
@@ -267,6 +274,15 @@ public class Sistema {
         public boolean cadastradoEmAlgumCurso() {
             return meusCursos.size() != 0;
         }
+
+        private Collection<String> desempenhoCursos(){
+            Collection<String> desempenhos = new ArrayList<>();
+            for(GerenciaCurso c: meusCursos){
+                String s = c.getNomeCurso() + ":" + c.getNivel() + ":" + c.getPontos();
+                desempenhos.add(s);
+            }
+            return desempenhos;
+        }
     }
 
     private static Sistema instancia = null;
@@ -292,6 +308,9 @@ public class Sistema {
             e.printStackTrace();
             System.exit(1);
         }
+
+        this.admins = loadAdmins();
+        this.users = loadUsers();
     }
 
     public static Sistema getInstance(){
@@ -324,12 +343,14 @@ public class Sistema {
     public void regCommonUser(String username, String password){
         logAtividade(username, "se cadastrou na plataforma");
         this.users.add(new CommonUser(password, username));
+        armazenarUsuarios();
     }
 
     public void regAdminUser(String username, String password){
         logAtividade(username, "se cadastrou na plataforma");
         AdminUser adm = new AdminUser(password, username);
         this.admins.add(adm);
+        armazenarUsuarios();
     }
 
     public void exibirCursos(){
@@ -350,5 +371,121 @@ public class Sistema {
         } catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    private void armazenarUsuarios(){
+        String s;
+        try(FileWriter f = new FileWriter("admins.txt")){
+            for(AdminUser u: admins){
+                s = u.getUsername() + ":" +u.getPassword() + "\n";
+                f.write(s);
+            }
+            f.close();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        try(FileWriter f = new FileWriter("users.txt")){
+            for(CommonUser u: users){
+                s = u.getUsername() + ":" + u.getPassword() + "\n";
+                f.write(s);
+                f.close();
+                try (FileWriter f2 = new FileWriter("./users/"+u.getUsername())){
+                    Collection<String> desempenhos = u.desempenhoCursos();
+                    for (String d: desempenhos){
+                        f2.write(d +"\n");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private Collection<AdminUser> loadAdmins(){
+        Collection<AdminUser> lAdmins = new ArrayList<>();
+        try(FileReader f = new FileReader("./admins.txt")){
+            int i = f.read();
+            while(i != -1){
+                char c = (char) i;
+                String nome = "";
+                while(c != ':'){
+                    nome += c;
+                    c = (char) f.read();
+                }
+                c = (char) f.read();
+                String password = "";
+                while(c != '\n' && c != -1){
+                    password += c;
+                    c = (char) f.read();
+                }
+                lAdmins.add(new AdminUser(password, nome));
+                if(c == -1) break;
+                i = f.read();
+            }
+
+        } catch (Exception e) {
+        }
+        return lAdmins;
+    }
+    private Collection<CommonUser> loadUsers(){
+        Collection<CommonUser> lUsers = new ArrayList<>();
+        try(FileReader f = new FileReader("./users.txt")){
+            int i = f.read();
+            while(i != -1){
+                char c = (char) i;
+                String nome = "";
+                while(c != ':'){
+                    nome += c;
+                    c = (char) f.read();
+                }
+                c = (char) f.read();
+                String password = "";
+                while(c != '\n' && c != -1){
+                    password += c;
+                    c = (char) f.read();
+                }
+                CommonUser userr = new CommonUser(password, nome);
+                lUsers.add(userr);
+                try (FileReader f2 = new FileReader("./users/"+nome)){
+                    int j = f2.read();
+                    while(j != -1){
+                        char k = (char) j;
+                        String nomeCurso = "";
+                        while(k != ':'){
+                            nomeCurso += k;
+                            k = (char) f2.read();
+                        }
+                        k = (char) f2.read();
+                        String nivel = "";
+                        while(k != ':'){
+                            nivel += k;
+                            k = (char) f2.read();
+                        }
+                        k = (char) f2.read();
+                        String pontos = "";
+                        while(k != '\n' && k != -1){
+                            pontos += k;
+                            k = (char) f2.read();
+                        }
+                        userr.inscreverCurso(nomeCurso);
+                        for(GerenciaCurso gc : userr.meusCursos){
+                            if(gc.getNomeCurso().equals(nomeCurso)) {
+                                gc.setNivel(Integer.parseInt(nivel));
+                            }
+                        }
+                        if(k == -1) break;
+                        j = f2.read();
+                    }
+                } catch (Exception e) {
+                }
+                if(c == -1) break;
+                i = f.read();
+            }
+
+        } catch (Exception e) {
+        }
+        return lUsers;
     }
 }
